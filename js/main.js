@@ -234,8 +234,8 @@ document.addEventListener("DOMContentLoaded", function () {
             (group.items || [])
               .map(function (item) {
                 return (
-                  '<span class="skill-chip" title="' + escapeHtml(item.name) + '" aria-label="' + escapeHtml(item.name) + '">' +
-                  createIconImageMarkup(item, "skill-icon") +
+                  '<span class="skill-chip' + (item.iconUrl ? '' : ' skill-chip-text') + '" title="' + escapeHtml(item.name) + '" aria-label="' + escapeHtml(item.name) + '">' +
+                  (item.iconUrl ? createIconImageMarkup(item, "skill-icon") : escapeHtml(item.name)) +
                   "</span>"
                 );
               })
@@ -295,24 +295,6 @@ document.addEventListener("DOMContentLoaded", function () {
           .join("");
       });
     }
-  }
-
-  function renderHeroStats() {
-    var statsGrid = document.getElementById("hero-stats");
-    if (!statsGrid) {
-      return;
-    }
-
-    statsGrid.innerHTML = (data.heroStats || [])
-      .map(function (stat) {
-        return (
-          '<div class="hero-stat reveal">' +
-          '<span class="hero-stat-value" data-count="' + escapeHtml(stat.value) + '">' + escapeHtml(stat.value) + "</span>" +
-          '<span class="hero-stat-label">' + escapeHtml(stat.label) + "</span>" +
-          "</div>"
-        );
-      })
-      .join("");
   }
 
   function renderProjectOverview() {
@@ -638,14 +620,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function initPhotoInteractions() {
     document.addEventListener("click", function (event) {
-      var projectCard = event.target.closest(".portfolio-card");
+      var projectLink = event.target.closest("a[href]");
       var filterButton = event.target.closest("[data-filter]");
       var photoButton = event.target.closest("[data-photo-src]");
       var genericLightboxButton = event.target.closest("[data-lightbox-src]");
       var lightboxClose = event.target.closest("[data-close-lightbox]");
 
-      if (projectCard && projectCard.getAttribute("href") && /\/projects\//.test(projectCard.getAttribute("href"))) {
-        window.sessionStorage.setItem("portfolioReturnHref", window.location.href);
+      if (projectLink) {
+        try {
+          var projectUrl = new URL(projectLink.href, window.location.href);
+          if (projectUrl.origin === window.location.origin && /\/projects\//.test(projectUrl.pathname) && body.dataset.page !== "project") {
+            window.sessionStorage.setItem("portfolioReturnState", JSON.stringify({
+              href: window.location.href,
+              scrollY: window.scrollY
+            }));
+          }
+        } catch (error) {
+          // Ignore malformed links and keep their default browser behavior.
+        }
       }
 
       if (filterButton) {
@@ -790,27 +782,78 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initProjectReturnLink() {
+    var restoreState = null;
+    try {
+      restoreState = JSON.parse(window.sessionStorage.getItem("portfolioRestoreState") || "null");
+    } catch (error) {
+      window.sessionStorage.removeItem("portfolioRestoreState");
+    }
+
     if (body.dataset.page !== "project") {
+      if (restoreState && restoreState.href) {
+        try {
+          var restoreUrl = new URL(restoreState.href, window.location.href);
+          if (restoreUrl.origin === window.location.origin && restoreUrl.pathname === window.location.pathname && restoreUrl.search === window.location.search) {
+            window.sessionStorage.removeItem("portfolioRestoreState");
+            window.requestAnimationFrame(function () {
+              window.requestAnimationFrame(function () {
+                window.scrollTo({ top: Number(restoreState.scrollY) || 0, behavior: "auto" });
+              });
+            });
+          }
+        } catch (error) {
+          window.sessionStorage.removeItem("portfolioRestoreState");
+        }
+      }
       return;
     }
 
-    var exploreLink = document.querySelector(".project-cta-section .button");
-    if (!exploreLink) {
-      return;
+    var topBackLink = document.querySelector(".project-breadcrumb");
+    var backCard = document.querySelector(".project-cta-card");
+
+    if (topBackLink) {
+      topBackLink.classList.add("project-back-link");
+      topBackLink.innerHTML = '<i data-lucide="arrow-left"></i><span>Back</span>';
     }
 
-    var storedReturnHref = window.sessionStorage.getItem("portfolioReturnHref");
-    var fallbackHref = document.referrer || "";
-    var returnHref = storedReturnHref || fallbackHref;
+    if (backCard) {
+      backCard.classList.add("is-back-only");
+      backCard.innerHTML = '<a class="button button-primary interactive-hover project-back-link" href="../../#portfolio"><i data-lucide="arrow-left"></i><span>Back</span></a>';
+    }
 
-    if (!returnHref) {
+    var backLinks = Array.prototype.slice.call(document.querySelectorAll(".project-back-link"));
+    var returnState = null;
+    try {
+      returnState = JSON.parse(window.sessionStorage.getItem("portfolioReturnState") || "null");
+    } catch (error) {
+      window.sessionStorage.removeItem("portfolioReturnState");
+    }
+
+    var fallbackHref = (topBackLink && topBackLink.getAttribute("href")) || "../../#portfolio";
+    var returnHref = (returnState && returnState.href) || document.referrer || fallbackHref;
+    if (!returnHref || !backLinks.length) {
       return;
     }
 
     try {
       var parsedUrl = new URL(returnHref, window.location.href);
       if (parsedUrl.origin === window.location.origin) {
-        exploreLink.href = parsedUrl.href;
+        backLinks.forEach(function (link) {
+          link.href = parsedUrl.href;
+          link.addEventListener("click", function (event) {
+            event.preventDefault();
+            if (returnState && returnState.href) {
+              window.sessionStorage.setItem("portfolioRestoreState", JSON.stringify(returnState));
+              window.location.assign(parsedUrl.href);
+              return;
+            }
+            if (document.referrer && window.history.length > 1) {
+              window.history.back();
+              return;
+            }
+            window.location.assign(parsedUrl.href);
+          });
+        });
       }
     } catch (error) {
       // Keep the fallback href from markup when the stored URL is invalid.
@@ -842,57 +885,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     stage.addEventListener("mouseleave", function () {
       portraitCard.style.transform = "";
-    });
-  }
-
-  function initCountUp() {
-    var values = document.querySelectorAll(".hero-stat-value");
-    if (!values.length || reducedMotion) {
-      return;
-    }
-
-    var observer = new IntersectionObserver(
-      function (entries, statObserver) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          var target = entry.target;
-          var rawValue = target.dataset.count || "0";
-          var numeric = parseInt(rawValue.replace(/\D/g, ""), 10);
-
-          if (Number.isNaN(numeric)) {
-            statObserver.unobserve(target);
-            return;
-          }
-
-          var suffix = rawValue.replace(String(numeric), "");
-          var current = 0;
-          var increment = Math.max(1, Math.round(numeric / 40));
-
-          function update() {
-            current += increment;
-            if (current >= numeric) {
-              current = numeric;
-            }
-
-            target.textContent = current + suffix;
-
-            if (current < numeric) {
-              window.requestAnimationFrame(update);
-            }
-          }
-
-          update();
-          statObserver.unobserve(target);
-        });
-      },
-      { threshold: 0.6 }
-    );
-
-    values.forEach(function (value) {
-      observer.observe(value);
     });
   }
 
@@ -1029,7 +1021,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  renderHeroStats();
   renderSkills();
   renderProjectOverview();
   renderCategoryPage();
@@ -1042,7 +1033,6 @@ document.addEventListener("DOMContentLoaded", function () {
   initCursorGlow();
   initPortraitTilt();
   initRevealAnimations();
-  initCountUp();
   initContactForm();
   refreshIcons();
 

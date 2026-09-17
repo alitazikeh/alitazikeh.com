@@ -1,11 +1,6 @@
 window.SITE_DATA = {
-  formspreeEndpoint: "https://formspree.io/f/your-form-id",
-  contactEmail: "tazi0002@algonquinlive.com",
-  heroStats: [
-    { value: "7", label: "featured projects" },
-    { value: "28", label: "curated photo frames" },
-    { value: "4", label: "creative disciplines" }
-  ],
+  formspreeEndpoint: "https://formspree.io/f/xyeyqlrq",
+  contactEmail: "ali.tazikeh@gmail.com",
   heroSocials: [
     {
       name: "GitHub",
@@ -81,19 +76,25 @@ window.SITE_DATA = {
     { name: "Adobe After Effects", iconUrl: "images/icons/adobe-after-effects-icon.svg" },
     { name: "Adobe Audition", iconUrl: "images/icons/adobe-audition-icon.svg" },
     { name: "Adobe Illustrator", iconUrl: "images/icons/adobe-illustrator-icon.svg" },
+    { name: "Adobe InDesign", iconUrl: "images/icons/indesign.svg" },
     { name: "Adobe Lightroom", iconUrl: "images/icons/adobe-lightroom-icon.svg" },
     { name: "Adobe Photoshop", iconUrl: "images/icons/adobe-photoshop-icon.svg" },
     { name: "Adobe Premiere Pro", iconUrl: "images/icons/adobe-premiere-pro-icon.svg" },
     { name: "Basecamp", iconUrl: "images/icons/basecamp-icon.svg" },
+    { name: "Excel", iconUrl: "images/icons/excel.svg" },
     { name: "CSS", iconUrl: "images/icons/css-icon.svg" },
     { name: "Drupal", iconUrl: "images/icons/drupal-icon.svg" },
     { name: "Figma", iconUrl: "images/icons/figma-icon.svg" },
+    { name: "GitHub", iconUrl: "images/icons/github-icon.svg" },
+    { name: "Maze", iconUrl: "images/icons/maze.svg" },
     { name: "HTML", iconUrl: "images/icons/html-icon.svg" },
     { name: "JavaScript", iconUrl: "images/icons/javascript-programming-language-icon.svg" },
     { name: "Notion", iconUrl: "images/icons/notion-icon.svg" },
     { name: "Power BI", iconUrl: "images/icons/power-bi-icon.svg" },
+    { name: "Power Query", iconUrl: "images/icons/power-query-logo.webp" },
     { name: "SharePoint", iconUrl: "images/icons/sharepoint-icon.svg" },
     { name: "Shopify", iconUrl: "images/icons/shopify-icon.svg" },
+    { name: "SQL", iconUrl: "images/icons/sql.svg" },
     { name: "VS Code", iconUrl: "images/icons/vscode-icon.svg" },
     { name: "WordPress", iconUrl: "images/icons/wordpress-icon.svg" }
   ],
@@ -155,8 +156,18 @@ window.SITE_DATA = {
     {
       name: "UI/UX & Design Tools",
       accent: "#f24e1e",
-      note: "Wireframes, interface visuals, and brand-aligned design systems from concept to polished screens.",
+      note: "Interface design, editorial layouts with InDesign, and usability testing with Maze to refine user experiences.",
       items: [
+        {
+          name: "Adobe InDesign",
+          iconUrl: "images/icons/indesign.svg",
+          accent: "#ff3366"
+        },
+        {
+          name: "Maze",
+          iconUrl: "images/icons/maze.svg",
+          accent: "#111111"
+        },
         {
           name: "Figma",
           iconUrl: "images/icons/figma-icon.svg",
@@ -226,8 +237,23 @@ window.SITE_DATA = {
     {
       name: "Data & Analytics",
       accent: "#f2c811",
-      note: "Clear dashboard thinking and reporting workflows for turning data into readable insights.",
+      note: "Dashboard and reporting workflows with Power BI. Foundational proficiency in Excel, Power Query, and SQL for organizing, preparing, and querying data.",
       items: [
+        {
+          name: "Excel",
+          iconUrl: "images/icons/excel.svg",
+          accent: "#217346"
+        },
+        {
+          name: "Power Query",
+          iconUrl: "images/icons/power-query-logo.webp",
+          accent: "#f2c811"
+        },
+        {
+          name: "SQL",
+          iconUrl: "images/icons/sql.svg",
+          accent: "#336791"
+        },
         {
           name: "Power BI",
           iconUrl: "images/icons/power-bi-icon.svg",
@@ -237,6 +263,107 @@ window.SITE_DATA = {
     }
   ],
   projects: [
+    {
+      id: "tallya",
+      category: "UX/UI Design",
+      title: "TALLYA",
+      summary: "A client-based safety mobile application designed to remain clear, understandable, and usable in higher-pressure situations.",
+      coverImage: "images/portfolio/ux-ui-design/tallya/tallya-phone-mockup.png",
+      coverAlt: "TALLYA safety mobile application login screen in a phone mockup",
+      tags: ["Client project", "UX/UI design", "Team leadership"],
+      type: "case-study",
+      detailPage: "projects/tallya/",
+      liveUrl: "https://www.algonquincollege.com/news/2026/08/06/algonquin-college-technology-project-showcase-highlights-creative-solutions-and-technical-problem-solving/#more-7050",
+      liveLabel: "View Algonquin Announcement",
+      gallery: [
+        { src: "images/portfolio/ux-ui-design/tallya/gallery/mockup-1.png", alt: "Approved TALLYA mobile application mockup" },
+        { src: "images/portfolio/ux-ui-design/tallya/award/showcase-1.jpg", alt: "TALLYA team at the Algonquin College Technology Project Showcase" }
+      ],
+      meta: {
+        role: "Team Lead and UX/UI Designer",
+        tools: ["Figma", "Prototyping", "Usability testing"],
+        deliverables: "UX planning, interface design, prototype testing, visual identity, and client presentations",
+        outcome: "Participants' Choice Award at the 2026 Algonquin College Technology Project Showcase"
+      },
+      highlights: [
+        "Tested clarity under simulated time pressure and distraction.",
+        "Balanced user needs, client expectations, and team priorities.",
+        "Only Interactive Media Design team participating in the showcase; winner of the Participants' Choice Award."
+      ],
+      storyBlocks: [
+        {
+          type: "text",
+          eyebrow: "Overview",
+          title: "A real client project shaped by context",
+          paragraphs: [
+            "TALLYA is a safety-focused mobile application developed by our Interactive Media Design team at Algonquin College. As Team Lead and UX/UI Designer, I helped guide the work through planning, interface design, prototyping, usability testing, client feedback, and iterative refinement.",
+            "The experience needed to support fast comprehension, clear hierarchy, and user confidence in situations where people may have less time and attention available."
+          ]
+        },
+        {
+          type: "text",
+          eyebrow: "Client Confidentiality",
+          title: "Respecting the product before launch",
+          paragraphs: ["At the client's request, detailed functionality and additional application screens cannot be publicly shared before the official launch. This case study therefore focuses on the design process, UX challenges, testing, leadership, and project recognition."]
+        },
+        {
+          type: "text",
+          eyebrow: "UX Challenge",
+          title: "Testing comprehension under pressure",
+          paragraphs: [
+            "Conventional usability sessions showed that relaxed participants could understand the interface and complete the required task. That setting, however, did not fully represent the context in which a safety application might be used.",
+            "We added a second testing condition with simulated time pressure and distraction. The goal was not to recreate an emergency, but to observe how added pressure affected comprehension and decision-making. These sessions exposed different usability issues and helped us make the experience clearer, more direct, and less cognitively demanding."
+          ]
+        },
+        {
+          type: "text",
+          eyebrow: "Client Collaboration",
+          title: "Balancing visual richness with usability",
+          paragraphs: [
+            "The client wanted some screens to feel more visually rich, while our usability goals required restraint and fast comprehension. Instead of dismissing either perspective, we explored and presented multiple directions.",
+            "Through discussion and iteration, we reached a balance that felt engaging without becoming distracting, simple without feeling unfinished, and clear without feeling overly clinical."
+          ]
+        },
+        {
+          type: "list",
+          eyebrow: "Design Process",
+          title: "An iterative path from requirements to refinement",
+          intro: "The team evaluated decisions against user needs, project constraints, and client expectations throughout the work.",
+          items: [
+            "Understand the client's objectives, intended users, requirements, and constraints.",
+            "Plan user flows and explore interface directions with clear hierarchy and reduced complexity.",
+            "Build interactive prototypes and conduct calm and higher-pressure usability testing.",
+            "Use testing observations, team reviews, and client feedback to refine the experience through multiple iterations."
+          ]
+        },
+        {
+          type: "text",
+          eyebrow: "Visual Identity",
+          title: "Designing the selected TALLYA logo",
+          paragraphs: ["I designed the final TALLYA logo selected by the client. Several concepts were explored before the chosen direction became the visual identity used for the project."]
+        },
+        {
+          type: "gallery",
+          eyebrow: "Award and Recognition",
+          title: "Participants' Choice Award",
+          layout: "trio",
+          images: [
+            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-1.jpg", alt: "TALLYA team at the 2026 Algonquin College Technology Project Showcase", caption: "TALLYA at the Technology Project Showcase" },
+            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-2.jpg", alt: "Participants' Choice Award event photograph", caption: "Participants' Choice Award recognition" },
+            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-3.jpg", alt: "TALLYA project team at the award event", caption: "The TALLYA team at the showcase" }
+          ]
+        },
+        {
+          type: "text",
+          eyebrow: "Leadership and Learning",
+          title: "What the project strengthened",
+          paragraphs: [
+            "Leading TALLYA strengthened my ability to coordinate responsibilities, communicate design rationale, manage competing priorities, and guide a multidisciplinary team through an iterative process.",
+            "The strongest lesson was that usability needs to be evaluated in the context where a product may actually be used. The project also reinforced that client collaboration requires careful explanation, exploration, and a workable balance between client preference and UX principles."
+          ]
+        }
+      ]
+    },
     {
       id: "board-and-bun",
       category: "UX/UI Design",

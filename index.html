@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Poppins:wght@400;500;600;700;800&amp;display=swap"
       rel="stylesheet"
     >
     <link
@@ -20,7 +20,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     >
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20260915g">
   </head>
   <body data-page="home" data-base="">
     <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
@@ -29,7 +29,7 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-lg premium-navbar">
         <div class="container">
-          <a class="navbar-brand brand-mark interactive-hover" href="./">Ali Tazikeh</a>
+          <a class="navbar-brand brand-mark interactive-hover" href="./" aria-label="Ali Tazikeh home"><img class="brand-logo" src="images/brand/ali-tazikeh-logo.png" alt="Ali Tazikeh logo" width="515" height="701"></a>
           <button
             class="navbar-toggler"
             type="button"
@@ -48,8 +48,8 @@
               <li class="nav-item"><a class="nav-link interactive-hover" href="#portfolio">Portfolio</a></li>
               <li class="nav-item"><a class="nav-link interactive-hover" href="#contact">Contact</a></li>
             </ul>
-            <a class="button button-primary interactive-hover" href="https://www.behance.net/alitazikeh" target="_blank" rel="noreferrer">
-              Visit My Behance
+            <a class="button button-primary interactive-hover" href="documents/resume.pdf" target="_blank" rel="noopener noreferrer">
+              View My R&eacute;sum&eacute;
               <i data-lucide="arrow-up-right"></i>
             </a>
           </div>
@@ -62,10 +62,11 @@
         <div class="container">
           <div class="hero-shell">
             <div class="hero-copy reveal">
-              <span class="section-label">Interactive Media Design Student</span>
+              <p class="hero-name">Hi, I'm Ali Tazikeh.</p>
+              <span class="section-label">Interactive Media Design Graduate</span>
               <h1>
                 Confident digital work
-                <span class="serif-accent">built with clarity, craft, and momentum.</span>
+                <span class="heading-accent">built with clarity, craft, and momentum.</span>
               </h1>
               <p class="hero-lead">
                 I create thoughtful interfaces, polished visuals, and story-driven digital
@@ -84,11 +85,11 @@
               <div class="hero-trust-row">
                 <div class="hero-trust-card">
                   <span>Creative focus</span>
-                  <strong>UX/UI, front-end, photo, and video</strong>
+                  <strong>UX/UI Design and front-end development</strong>
                 </div>
                 <div class="hero-trust-card">
                   <span>Design approach</span>
-                  <strong>Modern, calm, collaborative, and detail-conscious</strong>
+                  <strong>User-centered design that solves real problems and creates smooth, accessible experiences</strong>
                 </div>
               </div>
             </div>
@@ -107,8 +108,6 @@
               <div class="hero-floating-icons" id="hero-floating-icons"></div>
             </div>
           </div>
-
-          <div class="hero-stats-grid" id="hero-stats"></div>
         </div>
       </section>
 
@@ -118,6 +117,58 @@
         </div>
       </section>
 
+      <section class="featured-project-section" id="tallya">
+        <div class="container">
+          <article class="featured-project-card">
+            <div class="featured-project-copy reveal">
+              <span class="section-label">Featured Project</span>
+              <h2>TALLYA</h2>
+              <p class="featured-project-subtitle">Safety Mobile Application</p>
+              <p class="featured-project-role">Team Lead <span aria-hidden="true">&bull;</span> UX/UI Designer</p>
+              <p class="featured-project-summary">
+                A client-based safety mobile application designed around clarity, accessibility,
+                and usability in high-pressure situations.
+              </p>
+
+              <div class="featured-award" id="tallya-award">
+                <span class="featured-award-icon" aria-hidden="true">
+                  <i data-lucide="trophy"></i>
+                </span>
+                <div>
+                  <strong>Participants&rsquo; Choice Award</strong>
+                  <span>Algonquin College Technology Project Showcase &middot; 2026</span>
+                  <small>The only award-winning project from the Interactive Media Design program at the showcase.</small>
+                </div>
+              </div>
+
+              <div class="featured-project-actions">
+                <a class="button button-primary interactive-hover" href="projects/tallya/">
+                  View Case Study
+                  <i data-lucide="arrow-right"></i>
+                </a>
+                <a
+                  class="button button-secondary interactive-hover featured-project-external"
+                  href="https://www.algonquincollege.com/news/2026/08/06/algonquin-college-technology-project-showcase-highlights-creative-solutions-and-technical-problem-solving/#more-7050"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View on Algonquin College
+                  <i data-lucide="external-link"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="featured-project-visual reveal">
+              <img
+                src="images/portfolio/ux-ui-design/tallya/tallya-phone-mockup.png"
+                alt="TALLYA safety mobile application login screen displayed in a phone mockup"
+                width="1024"
+                height="1536"
+              >
+            </div>
+          </article>
+        </div>
+      </section>
       <section class="content-section about-section" id="about">
         <div class="container">
           <div class="section-heading reveal">
@@ -127,7 +178,7 @@
           <div class="about-shell">
             <div class="about-copy reveal">
               <p>
-                I am an Interactive Media Design student at Algonquin College who enjoys connecting
+                I am an Interactive Media Design graduate of Algonquin College who enjoys connecting
                 with people through creative projects. I value kindness, respect, and positive
                 collaboration, and I bring a calm, friendly energy into every environment I work in.
               </p>
@@ -156,11 +207,10 @@
               </article>
               <article class="about-card muted-card">
                 <span class="section-label">Current Focus</span>
-                <p>
-                  Building portfolio-quality work that feels clean, intentional, and modern while
-                  continuing to grow in product thinking, storytelling, and responsive front-end
-                  development.
-                </p>
+                <ul class="about-points">
+                  <li><i data-lucide="badge-check"></i><span>Expanding my data skills through Excel, Power Query, SQL, and Power BI</span></li>
+                  <li><i data-lucide="badge-check"></i><span>Learning to turn data into clear insights that support better decisions and more useful digital experiences</span></li>
+                </ul>
               </article>
             </div>
           </div>
@@ -252,9 +302,9 @@
                 message here and I will follow up by email.
               </p>
               <div class="contact-points">
-                <a class="contact-line interactive-hover" href="mailto:tazi0002@algonquinlive.com">
+                <a class="contact-line interactive-hover" href="mailto:ali.tazikeh@gmail.com">
                   <i data-lucide="mail"></i>
-                  <span>tazi0002@algonquinlive.com</span>
+                  <span>ali.tazikeh@gmail.com</span>
                 </a>
                 <div class="contact-line">
                   <i data-lucide="graduation-cap"></i>
@@ -320,7 +370,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/data.js?v=20260915e"></script>
+    <script src="js/main.js?v=20260915e"></script>
   </body>
 </html>
