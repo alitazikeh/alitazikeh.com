@@ -26,9 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
       .replace(/'/g, "&#39;");
   }
 
-  function getProjectsByCategory(category) {
+  function projectMatchesCategory(project, category) {
+    return project.category === category || (project.categories || []).indexOf(category) !== -1;
+  }
+
+  function getProjectsByCategory(category, subcategory) {
     return (data.projects || []).filter(function (project) {
-      return project.category === category;
+      return !project.hidden && projectMatchesCategory(project, category) && (!subcategory || project.subcategory === subcategory);
     });
   }
 
@@ -55,7 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       key: "photography",
-      category: "Photography",
+      category: "Multimedia",
+      subcategory: "Photography",
       type: "photography",
       gridId: "photo-preview-grid",
       actionId: "photo-actions",
@@ -65,12 +70,13 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       key: "videography",
-      category: "Videography",
+      category: "Multimedia",
+      subcategory: "Video & Film",
       type: "projects",
       gridId: "video-grid",
       actionId: "video-actions",
       pageHref: "videography/",
-      pageTitle: "Videography",
+      pageTitle: "Video & Film",
       pageDescription: "Short-form film and audio-driven work shaped by pacing, sound, and story."
     }
   ];
@@ -91,32 +97,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function createProjectCard(project, options) {
     var settings = options || {};
-    var cardClickable = settings.cardClickable !== false;
+    var cardClickable = settings.cardClickable !== false && project.type !== "preview";
+    var selected = settings.selected === true;
+    var gameOverClass = project.id === "game-over" ? " portfolio-card-game-over" : "";
+    var cardTags = settings.tags || project.tags;
+    var tagMarkup = selected ? "" : '<div class="portfolio-chip-row">' + createTagMarkup(cardTags) + "</div>";
+    var isInternal = project.type === "case-study" || project.type === "internal";
     var linkLabel = project.ctaLabel || (project.type === "case-study" ? "Explore Case Study" : "Open Project");
-    var destination = project.type === "case-study" ? resolvePath(project.detailPage) : project.externalUrl;
-    var target = project.type === "case-study" ? "" : ' target="_blank" rel="noreferrer"';
+    var destination = isInternal ? project.detailPage : project.externalUrl;
+    var target = isInternal || project.type === "preview" ? "" : ' target="_blank" rel="noreferrer"';
     var tools = project.meta && project.meta.tools ? project.meta.tools.join(" • ") : "";
-    var footerAction = cardClickable
-      ? '<span class="button button-secondary" aria-hidden="true">' +
-        escapeHtml(linkLabel) +
-        '<i data-lucide="arrow-up-right"></i></span>'
-      : '<a class="button button-secondary interactive-hover" href="' + escapeHtml(resolvePath(destination)) + '"' + target + ">" +
-        escapeHtml(linkLabel) +
-        '<i data-lucide="arrow-up-right"></i></a>';
+    var playOverlay = selected && ["short-horror-movie", "the-camper", "ten-toes-coffee"].indexOf(project.id) !== -1
+      ? '<span class="portfolio-play-badge" aria-hidden="true"><i data-lucide="play"></i></span>'
+      : "";
+    var mediaMarkup = project.coverImage
+      ? '<img src="' + escapeHtml(resolvePath(project.coverImage)) + '" alt="' + escapeHtml(project.coverAlt) + '">'
+      : '<div class="portfolio-placeholder" role="img" aria-label="' + escapeHtml(project.title) + ' project preview"><span>Project preview</span><strong>' + escapeHtml(project.title) + '</strong><small>' + ((project.tags || []).indexOf("Work in Progress") !== -1 ? 'Work in progress' : 'Image coming soon') + '</small></div>';
+    var footerAction = project.type === "preview"
+      ? '<span class="button button-secondary portfolio-placeholder-action">' + escapeHtml(linkLabel) + '</span>'
+      : cardClickable
+        ? '<span class="button button-secondary" aria-hidden="true">' +
+          escapeHtml(linkLabel) +
+          '<i data-lucide="arrow-up-right"></i></span>'
+        : '<a class="button button-secondary interactive-hover" href="' + escapeHtml(resolvePath(destination)) + '"' + target + ">" +
+          escapeHtml(linkLabel) +
+          '<i data-lucide="arrow-up-right"></i></a>';
 
     if (cardClickable) {
       return (
-        '<a class="portfolio-card reveal interactive-hover" href="' + escapeHtml(resolvePath(destination)) + '"' + target + ">" +
+        '<a class="portfolio-card' + (selected ? ' selected-work-card' : '') + gameOverClass + ' reveal interactive-hover" href="' + escapeHtml(resolvePath(destination)) + '"' + target + ">" +
         '<div class="portfolio-media">' +
-        '<img src="' + escapeHtml(resolvePath(project.coverImage)) + '" alt="' + escapeHtml(project.coverAlt) + '">' +
+        mediaMarkup +
+        playOverlay +
         "</div>" +
         '<div class="portfolio-card-body">' +
-        '<div class="portfolio-chip-row">' + createTagMarkup(project.tags) + "</div>" +
+        tagMarkup +
         '<h3 class="portfolio-card-title">' + escapeHtml(project.title) + "</h3>" +
         '<p class="portfolio-card-copy">' + escapeHtml(project.summary) + "</p>" +
         '<div class="portfolio-meta">' +
         '<span><i data-lucide="briefcase"></i>' + escapeHtml(project.meta.role) + "</span>" +
-        '<span><i data-lucide="sparkles"></i>' + escapeHtml(tools) + "</span>" +
+        (tools ? '<span><i data-lucide="sparkles"></i>' + escapeHtml(tools) + "</span>" : "") +
         "</div>" +
         '<div class="portfolio-card-footer">' +
         footerAction +
@@ -127,17 +147,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     return (
-      '<article class="portfolio-card portfolio-card-static reveal">' +
+      '<article class="portfolio-card portfolio-card-static' + (selected ? ' selected-work-card' : '') + (project.type === "preview" ? ' portfolio-card-preview' : '') + gameOverClass + ' reveal">' +
       '<div class="portfolio-media">' +
-      '<img src="' + escapeHtml(resolvePath(project.coverImage)) + '" alt="' + escapeHtml(project.coverAlt) + '">' +
+      mediaMarkup +
+      playOverlay +
       "</div>" +
       '<div class="portfolio-card-body">' +
-      '<div class="portfolio-chip-row">' + createTagMarkup(project.tags) + "</div>" +
+      tagMarkup +
       '<h3 class="portfolio-card-title">' + escapeHtml(project.title) + "</h3>" +
       '<p class="portfolio-card-copy">' + escapeHtml(project.summary) + "</p>" +
       '<div class="portfolio-meta">' +
       '<span><i data-lucide="briefcase"></i>' + escapeHtml(project.meta.role) + "</span>" +
-      '<span><i data-lucide="sparkles"></i>' + escapeHtml(tools) + "</span>" +
+      (tools ? '<span><i data-lucide="sparkles"></i>' + escapeHtml(tools) + "</span>" : "") +
       "</div>" +
       '<div class="portfolio-card-footer">' +
       footerAction +
@@ -199,6 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getPhotographyAlbums() {
+    var photographySection = getPortfolioSection("photography");
     var groups = {};
     var albums = [];
 
@@ -206,6 +228,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!groups[photo.collection]) {
         groups[photo.collection] = {
           name: photo.collection,
+          category: photographySection.category,
+          subcategory: photographySection.subcategory,
           coverImage: photo.src,
           coverAlt: photo.alt,
           items: []
@@ -220,50 +244,27 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function renderSkills() {
-    var skillGrid = document.getElementById("skills-grid");
-    var floatingIcons = document.getElementById("hero-floating-icons");
+    var capabilityGrid = document.getElementById("capabilities-grid");
     var iconMarquee = document.getElementById("icon-marquee");
     var footerSocialRows = document.querySelectorAll("[data-footer-socials]");
 
-    if (skillGrid) {
-      skillGrid.innerHTML = (data.skillGroups || [])
-        .map(function (group, index) {
+    if (capabilityGrid) {
+      capabilityGrid.innerHTML = (data.capabilities || [])
+        .map(function (group) {
           return (
-            '<article class="skill-card reveal" style="--skill-accent:' + escapeHtml(group.accent) + ";--skill-delay:" + index + '">' +
-            '<div class="skill-icon-row">' +
-            (group.items || [])
-              .map(function (item) {
-                return (
-                  '<span class="skill-chip' + (item.iconUrl ? '' : ' skill-chip-text') + '" title="' + escapeHtml(item.name) + '" aria-label="' + escapeHtml(item.name) + '">' +
-                  (item.iconUrl ? createIconImageMarkup(item, "skill-icon") : escapeHtml(item.name)) +
-                  "</span>"
-                );
-              })
-              .join("") +
-            "</div>" +
-            '<h3 class="skill-title">' + escapeHtml(group.name) + "</h3>" +
-            '<p class="skill-note">' + escapeHtml(group.note) + "</p>" +
-            "</article>"
+            '<article class="capability-card reveal">' +
+            '<h3>' + escapeHtml(group.name) + '</h3>' +
+            '<p>' + escapeHtml(group.description) + '</p>' +
+            '<ul class="capability-list">' +
+            (group.items || []).map(function (item) {
+              return '<li>' + escapeHtml(item) + '</li>';
+            }).join("") +
+            '</ul>' +
+            '</article>'
           );
         })
         .join("");
     }
-
-    if (floatingIcons) {
-      floatingIcons.innerHTML = (data.heroSkills || [])
-        .slice(0, 7)
-        .map(function (skill, index) {
-          return (
-            '<div class="floating-skill skill-pos-' + (index + 1) + '" style="--skill-accent:' + escapeHtml(skill.accent) +
-            '" aria-label="' + escapeHtml(skill.name) + '" title="' + escapeHtml(skill.name) + '">' +
-            createIconImageMarkup(skill, "floating-skill-icon") +
-            '<span>' + escapeHtml(skill.name) + "</span>" +
-            "</div>"
-          );
-        })
-        .join("");
-    }
-
     if (iconMarquee) {
       var marqueeItems = data.iconMarquee || [];
       var marqueeMarkup = marqueeItems
@@ -297,53 +298,121 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function createStackedWorkCard(project, index) {
+    var isCaseStudy = project.type === "case-study";
+    var destination = isCaseStudy ? project.detailPage : project.externalUrl;
+    var actionLabel = isCaseStudy ? "View Case Study" : (project.ctaLabel || "View Project");
+    var target = isCaseStudy ? "" : ' target="_blank" rel="noopener noreferrer"';
+    var award = project.id === "tallya"
+      ? '<div class="featured-award stacked-work-award">' +
+        '<span class="featured-award-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>' +
+        '<div><strong>Participants&rsquo; Choice Award</strong>' +
+        '<span>Algonquin College Technology Project Showcase &mdash; Summer 2026</span></div>' +
+        '</div>'
+      : "";
+    var role = project.meta && project.meta.role
+      ? '<p class="stacked-work-role">' + escapeHtml(project.meta.role) + '</p>'
+      : "";
+
+    return (
+      '<article class="stacked-work-card" id="' + (project.id === "tallya" ? "tallya" : "stacked-" + escapeHtml(project.id)) +
+      '" data-project-id="' + escapeHtml(project.id) + '" style="--stack-top:' + (104 + index * 18) + 'px;--stack-level:' + (index + 1) + '">' +
+      '<div class="stacked-work-copy">' +
+      '<h3>' + escapeHtml(project.title) + '</h3>' +
+      '<p class="stacked-work-subtitle">' + escapeHtml(project.id === "tallya" ? "Safety Mobile Application" : project.subcategory) + '</p>' +
+      role +
+      '<p class="stacked-work-summary">' + escapeHtml(project.summary) + '</p>' +
+      award +
+      '<a class="button button-primary interactive-hover" href="' + escapeHtml(resolvePath(destination)) + '"' + target + ' aria-label="' + escapeHtml(actionLabel + " for " + project.title) + '">' +
+      escapeHtml(actionLabel) + '<i data-lucide="' + (isCaseStudy ? "arrow-right" : "arrow-up-right") + '"></i></a>' +
+      '</div>' +
+      '<div class="stacked-work-visual">' +
+      '<div class="stacked-work-image"><img src="' + escapeHtml(resolvePath(project.coverImage)) + '" alt="' + escapeHtml(project.coverAlt) + '" loading="' + (index === 0 ? "eager" : "lazy") + '"></div>' +
+      '</div>' +
+      '</article>'
+    );
+  }
+
   function renderProjectOverview() {
-    portfolioSections
-      .filter(function (section) {
-        return section.type === "projects";
+    var grid = document.getElementById("selected-work-grid");
+    var stack = document.getElementById("stacked-work-list");
+    if (!grid || !stack) {
+      return;
+    }
+
+    var projects = data.projects || [];
+    var selectedProjects = (data.selectedWorkIds || [])
+      .map(function (id) {
+        return projects.find(function (project) { return project.id === id; });
       })
-      .forEach(function (section) {
-        var items = getProjectsByCategory(section.category);
-        var container = document.getElementById(section.gridId);
-        var actionWrap = document.getElementById(section.actionId);
+      .filter(function (project) {
+        return !!project && !project.hidden;
+      });
 
-        if (!container) {
-          return;
-        }
+    var stackedIds = ["tallya", "remiya", "game-over", "stittsville"];
+    var libraryProjects = selectedProjects.filter(function (project) {
+      return stackedIds.indexOf(project.id) === -1;
+    });
 
-        container.innerHTML = items
-          .slice(0, 3)
-          .map(function (project) {
-            return createProjectCard(project, { cardClickable: false });
-          })
-          .join("");
+    stack.innerHTML = stackedIds
+      .map(function (id) {
+        return selectedProjects.find(function (project) { return project.id === id; });
+      })
+      .filter(Boolean)
+      .map(createStackedWorkCard)
+      .join("");
 
-        if (actionWrap) {
-          actionWrap.innerHTML = createPortfolioAction(section, items.length);
+    grid.innerHTML = libraryProjects
+      .map(function (project) {
+        return createProjectCard(project, { selected: true });
+      })
+      .join("");
+
+    var viewAllButton = document.getElementById("view-all-case-studies");
+    var library = document.getElementById("case-study-library");
+    var countStatus = document.getElementById("selected-work-count");
+    var activeCategory = "All";
+
+    function updateProjectVisibility() {
+      var shownCount = 0;
+      libraryProjects.forEach(function (project, index) {
+        var visible = projectMatchesCategory(project, activeCategory) || activeCategory === "All";
+        grid.children[index].hidden = !visible;
+        if (!grid.children[index].hidden) {
+          shownCount += 1;
         }
       });
 
-    var photoPreview = document.getElementById("photo-preview-grid");
-    var photoActions = document.getElementById("photo-actions");
-    if (photoPreview) {
-      photoPreview.innerHTML = getPhotographyAlbums()
-        .slice(0, 3)
-        .map(function (album) {
-          return (
-            '<button class="photo-preview-card reveal interactive-hover" type="button" data-photo-src="' + escapeHtml(album.coverImage) + '" data-lightbox-caption="' + escapeHtml(album.name) + '">' +
-            '<img src="' + escapeHtml(resolvePath(album.coverImage)) + '" alt="' + escapeHtml(album.coverAlt) + '">' +
-            '<span class="photo-preview-label">' + escapeHtml(album.name) + "</span>" +
-            "</button>"
-          );
-        })
-        .join("");
+      if (countStatus) {
+        countStatus.textContent = "Showing " + shownCount + " projects" + (activeCategory === "All" ? " of " + libraryProjects.length : " in " + activeCategory) + ".";
+      }
     }
 
-    if (photoActions) {
-      photoActions.innerHTML = createPortfolioAction(getPortfolioSection("photography"), getPhotographyAlbums().length);
+    if (viewAllButton && library) {
+      viewAllButton.addEventListener("click", function () {
+        var isOpen = library.hidden;
+        library.hidden = !isOpen;
+        viewAllButton.setAttribute("aria-expanded", String(isOpen));
+        viewAllButton.querySelector("span").textContent = isOpen ? "Hide All Case Studies" : "View All Case Studies";
+        refreshIcons();
+      });
     }
+
+    var filters = document.querySelectorAll(".selected-work-filter");
+    filters.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var category = button.dataset.selectedFilter;
+        activeCategory = category;
+        filters.forEach(function (filterButton) {
+          var active = filterButton === button;
+          filterButton.classList.toggle("is-active", active);
+          filterButton.setAttribute("aria-pressed", String(active));
+        });
+        updateProjectVisibility();
+      });
+    });
+    updateProjectVisibility();
   }
-
   function renderCategoryPage() {
     if (body.dataset.page !== "portfolio-category") {
       return;
@@ -369,7 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (section.type === "projects" && projectGrid) {
-      projectGrid.innerHTML = getProjectsByCategory(section.category)
+      projectGrid.innerHTML = getProjectsByCategory(section.category, section.subcategory)
         .map(function (project) {
             return createProjectCard(project, { cardClickable: false });
           })
@@ -377,8 +446,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  var requestedPhotoCollection = new URLSearchParams(window.location.search).get("collection");
   var photoState = {
-    filter: "All",
+    filter: requestedPhotoCollection && getPhotographyItems().some(function (photo) {
+      return photo.collection === requestedPhotoCollection;
+    }) ? requestedPhotoCollection : "All",
     sort: "curated"
   };
 
@@ -519,6 +591,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    var heroImage = '<img src="' + escapeHtml(resolvePath(project.coverImage)) + '" alt="' + escapeHtml(project.coverAlt) + '">';
+    var heroMedia = ["tallya", "remiya", "stittsville"].indexOf(project.id) !== -1
+      ? heroImage
+      : '<button class="project-image-button interactive-hover" type="button" data-lightbox-src="' + escapeHtml(project.coverImage) + '" data-lightbox-alt="' + escapeHtml(project.coverAlt) + '" data-lightbox-caption="' + escapeHtml(project.title) + '">' + heroImage + "</button>";
     heroShell.innerHTML =
       '<div class="project-hero-copy reveal">' +
       '<span class="section-label">Case Study</span>' +
@@ -538,19 +614,19 @@ document.addEventListener("DOMContentLoaded", function () {
       "</div>" +
       "</div>" +
       '<div class="project-hero-media reveal">' +
-      '<button class="project-image-button interactive-hover" type="button" data-lightbox-src="' + escapeHtml(project.coverImage) + '" data-lightbox-alt="' + escapeHtml(project.coverAlt) + '" data-lightbox-caption="' + escapeHtml(project.title) + '">' +
-      '<img src="' + escapeHtml(resolvePath(project.coverImage)) + '" alt="' + escapeHtml(project.coverAlt) + '">' +
-      "</button>" +
+      heroMedia +
       "</div>";
 
     storyShell.innerHTML =
-      '<section class="project-highlight-band reveal">' +
-      (project.highlights || [])
-        .map(function (highlight) {
-          return '<article class="highlight-card"><i data-lucide="sparkles"></i><p>' + escapeHtml(highlight) + "</p></article>";
-        })
-        .join("") +
-      "</section>" +
+      ((project.highlights || []).length
+        ? '<section class="project-highlight-band reveal">' +
+          project.highlights
+            .map(function (highlight) {
+              return '<article class="highlight-card"><i data-lucide="sparkles"></i><p>' + escapeHtml(highlight) + "</p></article>";
+            })
+            .join("") +
+          "</section>"
+        : "") +
       (project.storyBlocks || [])
         .map(function (block) {
           if (block.type === "text") {
@@ -738,14 +814,33 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    if (body.dataset.page !== "home") {
-      setActiveNav("portfolio");
+    if (body.dataset.page === "about") {
+      navLinks.forEach(function (link) {
+        link.classList.toggle("is-active", link.textContent.trim() === "About");
+      });
       return;
     }
 
-    var sections = ["about", "skills", "portfolio", "contact"]
-      .map(function (id) {
-        return document.getElementById(id);
+    if (body.dataset.page === "resume") {
+      navLinks.forEach(function (link) {
+        link.classList.toggle("is-active", link.textContent.trim() === "Résumé");
+      });
+      return;
+    }
+
+    if (body.dataset.page !== "home") {
+      setActiveNav("work");
+      return;
+    }
+
+    var sections = [
+      { id: "work", nav: "work" },
+      { id: "skills", nav: "work" },
+      { id: "contact", nav: "contact" }
+    ]
+      .map(function (item) {
+        var element = document.getElementById(item.id);
+        return element ? { element: element, nav: item.nav } : null;
       })
       .filter(Boolean);
 
@@ -758,18 +853,18 @@ document.addEventListener("DOMContentLoaded", function () {
       var activeId = null;
 
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24) {
-        setActiveNav(sections[sections.length - 1].id);
+        setActiveNav(sections[sections.length - 1].nav);
         return;
       }
 
-      if (marker < sections[0].offsetTop) {
-        setActiveNav("");
+      if (marker < sections[0].element.offsetTop) {
+        setActiveNav("home");
         return;
       }
 
       sections.forEach(function (section) {
-        if (section.offsetTop <= marker) {
-          activeId = section.id;
+        if (section.element.offsetTop <= marker) {
+          activeId = section.nav;
         }
       });
 
@@ -1021,6 +1116,111 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function initMobileNav() {
+    var nav = document.getElementById("siteNav");
+    if (!nav) {
+      return;
+    }
+
+    nav.addEventListener("click", function (event) {
+      var link = event.target.closest("a[href]");
+      if (!link || !nav.contains(link)) {
+        return;
+      }
+
+      if (window.matchMedia("(max-width: 991px)").matches && nav.classList.contains("show") && window.bootstrap) {
+        window.bootstrap.Collapse.getOrCreateInstance(nav, { toggle: false }).hide();
+      }
+    });
+  }
+
+  function initStandaloneBackLinks() {
+    if (body.dataset.page !== "about" && body.dataset.page !== "resume") {
+      return;
+    }
+
+    var links = Array.prototype.slice.call(document.querySelectorAll("[data-page-back]"));
+    if (!links.length || !document.referrer) {
+      return;
+    }
+
+    try {
+      var previous = new URL(document.referrer);
+      if (previous.origin !== window.location.origin || previous.pathname === window.location.pathname) {
+        return;
+      }
+
+      links.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          window.history.back();
+        });
+      });
+    } catch (error) {
+      // The normal homepage fallback remains available.
+    }
+  }
+
+  function initThemeToggle() {
+    var nav = document.querySelector(".navbar-collapse");
+    if (!nav) {
+      return;
+    }
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "theme-toggle interactive-hover";
+
+    var systemPreference = window.matchMedia("(prefers-color-scheme: dark)");
+    var hasManualPreference = false;
+    try {
+      hasManualPreference = ["dark", "light"].includes(window.localStorage.getItem("portfolio-theme"));
+    } catch (error) {
+      // Follow the system preference when storage is unavailable.
+    }
+
+    function applyTheme(theme) {
+      var isDark = theme === "dark";
+      document.documentElement.dataset.theme = theme;
+      var portrait = document.querySelector(".hero-portrait-image[data-light-src][data-dark-src]");
+      if (portrait) {
+        var portraitSrc = portrait.getAttribute(isDark ? "data-dark-src" : "data-light-src");
+        if (portrait.getAttribute("src") !== portraitSrc) {
+          portrait.setAttribute("src", portraitSrc);
+        }
+      }
+      toggle.setAttribute("aria-pressed", String(isDark));
+      toggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+      toggle.innerHTML =
+        '<i data-lucide="' + (isDark ? "sun" : "moon") + '"></i>' +
+        '<span>' + (isDark ? "Light Mode" : "Dark Mode") + "</span>";
+      refreshIcons();
+    }
+
+    nav.insertBefore(toggle, nav.firstChild);
+    applyTheme(document.documentElement.dataset.theme ||
+      (systemPreference.matches ? "dark" : "light"));
+
+    systemPreference.addEventListener("change", function (event) {
+      if (!hasManualPreference) {
+        applyTheme(event.matches ? "dark" : "light");
+      }
+    });
+
+    toggle.addEventListener("click", function () {
+      var nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
+      hasManualPreference = true;
+      try {
+        window.localStorage.setItem("portfolio-theme", nextTheme);
+      } catch (error) {
+        // Keep the active page theme even when persistence is unavailable.
+      }
+    });
+  }
+
+  initThemeToggle();
+  initMobileNav();
   renderSkills();
   renderProjectOverview();
   renderCategoryPage();
@@ -1029,6 +1229,7 @@ document.addEventListener("DOMContentLoaded", function () {
   renderProjectPage();
   initNavState();
   initProjectReturnLink();
+  initStandaloneBackLinks();
   initPhotoInteractions();
   initCursorGlow();
   initPortraitTilt();

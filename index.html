@@ -20,16 +20,16 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     >
-    <link rel="stylesheet" href="css/style.css?v=20260915g">
+    <script src="js/theme-init.js?v=20260920a"></script>
+    <link rel="stylesheet" href="css/style.css?v=20260921a">
   </head>
-  <body data-page="home" data-base="">
+  <body id="home" data-page="home" data-base="">
     <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
     <div class="cursor-core" id="cursor-core" aria-hidden="true"></div>
 
     <header class="site-header">
       <nav class="navbar navbar-expand-lg premium-navbar">
         <div class="container">
-          <a class="navbar-brand brand-mark interactive-hover" href="./" aria-label="Ali Tazikeh home"><img class="brand-logo" src="images/brand/ali-tazikeh-logo.png" alt="Ali Tazikeh logo" width="515" height="701"></a>
           <button
             class="navbar-toggler"
             type="button"
@@ -43,13 +43,13 @@
           </button>
           <div class="collapse navbar-collapse" id="siteNav">
             <ul class="navbar-nav mx-auto">
-              <li class="nav-item"><a class="nav-link interactive-hover" href="#about">About</a></li>
-              <li class="nav-item"><a class="nav-link interactive-hover" href="#skills">Skills</a></li>
-              <li class="nav-item"><a class="nav-link interactive-hover" href="#portfolio">Portfolio</a></li>
-              <li class="nav-item"><a class="nav-link interactive-hover" href="#contact">Contact</a></li>
+              <li class="nav-item"><a class="nav-link interactive-hover" href="#home">Home</a></li>
+              <li class="nav-item"><a class="nav-link interactive-hover" href="about/">About</a></li>
+              <li class="nav-item"><a class="nav-link interactive-hover" href="#work">Portfolio</a></li>
+              <li class="nav-item"><a class="nav-link interactive-hover" href="resume/">R&eacute;sum&eacute;</a></li>
             </ul>
-            <a class="button button-primary interactive-hover" href="documents/resume.pdf" target="_blank" rel="noopener noreferrer">
-              View My R&eacute;sum&eacute;
+            <a class="button button-primary interactive-hover" href="#contact">
+              Let&rsquo;s Talk
               <i data-lucide="arrow-up-right"></i>
             </a>
           </div>
@@ -62,35 +62,21 @@
         <div class="container">
           <div class="hero-shell">
             <div class="hero-copy reveal">
-              <p class="hero-name">Hi, I'm Ali Tazikeh.</p>
-              <span class="section-label">Interactive Media Design Graduate</span>
-              <h1>
-                Confident digital work
-                <span class="heading-accent">built with clarity, craft, and momentum.</span>
-              </h1>
+              <p class="hero-intro">Hi, I'm</p>
+              <h1 class="hero-name">Ali Tazikeh</h1>
+              <p class="hero-role">Interactive Media Designer</p>
               <p class="hero-lead">
-                I create thoughtful interfaces, polished visuals, and story-driven digital
-                experiences across UX/UI, web, photography, and video.
+                I design and build thoughtful digital experiences that solve real problems and feel effortless to use.
               </p>
               <div class="hero-actions">
-                <a class="button button-primary interactive-hover" href="#portfolio">
-                  View Selected Work
+                <a class="button button-primary interactive-hover" href="about/">
+                  Learn More About Me
                   <i data-lucide="arrow-right"></i>
                 </a>
-                <a class="button button-secondary interactive-hover" href="#about">
-                  About Me
-                  <i data-lucide="user-round"></i>
+                <a class="button button-secondary interactive-hover" href="resume/">
+                  View R&eacute;sum&eacute;
+                  <i data-lucide="file-text"></i>
                 </a>
-              </div>
-              <div class="hero-trust-row">
-                <div class="hero-trust-card">
-                  <span>Creative focus</span>
-                  <strong>UX/UI Design and front-end development</strong>
-                </div>
-                <div class="hero-trust-card">
-                  <span>Design approach</span>
-                  <strong>User-centered design that solves real problems and creates smooth, accessible experiences</strong>
-                </div>
               </div>
             </div>
 
@@ -99,15 +85,26 @@
               <div class="hero-portrait-shell">
                 <div class="hero-portrait-card" id="portrait-card">
                   <img
-                    src="images/header-image/header-banner-profile-image.png"
-                    alt="Portrait of Ali Tazikeh"
+                    src="images/header-image/ali-portrait-sunglasses.png?v=20260920b"
+                    data-light-src="images/header-image/ali-portrait-sunglasses.png?v=20260920b"
+                    data-dark-src="images/header-image/ali-portrait.png"
+                    alt="Illustrated portrait of Ali Tazikeh"
                     class="hero-portrait-image"
                   >
                 </div>
               </div>
-              <div class="hero-floating-icons" id="hero-floating-icons"></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section class="content-section skills-section" id="skills">
+        <div class="container">
+          <div class="section-heading reveal">
+            <span class="section-label">Capabilities</span>
+            <h2>What I Do</h2>
+          </div>
+          <div class="capabilities-grid" id="capabilities-grid"></div>
         </div>
       </section>
 
@@ -117,7 +114,8 @@
         </div>
       </section>
 
-      <section class="featured-project-section" id="tallya">
+      <div id="work" class="section-anchor" aria-hidden="true"></div>
+      <section class="featured-project-section" id="tallya-featured" hidden>
         <div class="container">
           <article class="featured-project-card">
             <div class="featured-project-copy reveal">
@@ -136,8 +134,8 @@
                 </span>
                 <div>
                   <strong>Participants&rsquo; Choice Award</strong>
-                  <span>Algonquin College Technology Project Showcase &middot; 2026</span>
-                  <small>The only award-winning project from the Interactive Media Design program at the showcase.</small>
+                  <span>Algonquin College Technology Project Showcase &mdash; Summer 2026</span>
+                  <small>Only Interactive Media Design team participating in the showcase.</small>
                 </div>
               </div>
 
@@ -169,124 +167,28 @@
           </article>
         </div>
       </section>
-      <section class="content-section about-section" id="about">
-        <div class="container">
-          <div class="section-heading reveal">
-            <span class="section-label">About Me</span>
-            <h2>Creative work grounded in kindness, curiosity, and reliable collaboration.</h2>
-          </div>
-          <div class="about-shell">
-            <div class="about-copy reveal">
-              <p>
-                I am an Interactive Media Design graduate of Algonquin College who enjoys connecting
-                with people through creative projects. I value kindness, respect, and positive
-                collaboration, and I bring a calm, friendly energy into every environment I work in.
-              </p>
-              <p>
-                I am naturally curious and have a strong passion for learning new skills, exploring
-                new ideas, and challenging myself to grow both personally and professionally. I take
-                pride in being reliable, supportive, and easy to work with, and I believe that strong
-                relationships and clear communication are just as important as strong results.
-              </p>
-              <p>
-                I enjoy working with others, sharing ideas, and contributing to projects where
-                creativity and teamwork come together. Whether in a classroom, a team setting, or a
-                professional environment, I aim to create a positive experience for the people around
-                me.
-              </p>
-            </div>
-
-            <div class="about-side reveal">
-              <article class="about-card">
-                <span class="section-label">What Stands Out</span>
-                <ul class="about-points">
-                  <li><i data-lucide="badge-check"></i><span>Friendly and dependable collaborator</span></li>
-                  <li><i data-lucide="badge-check"></i><span>Strong visual taste with practical structure</span></li>
-                  <li><i data-lucide="badge-check"></i><span>Comfortable moving between design and front-end execution</span></li>
-                </ul>
-              </article>
-              <article class="about-card muted-card">
-                <span class="section-label">Current Focus</span>
-                <ul class="about-points">
-                  <li><i data-lucide="badge-check"></i><span>Expanding my data skills through Excel, Power Query, SQL, and Power BI</span></li>
-                  <li><i data-lucide="badge-check"></i><span>Learning to turn data into clear insights that support better decisions and more useful digital experiences</span></li>
-                </ul>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-section skills-section" id="skills">
-        <div class="container">
-          <div class="section-heading reveal">
-            <span class="section-label">Tools and Strengths</span>
-            <h2>A visual toolkit that supports both concept work and front-end execution.</h2>
-          </div>
-          <div class="skills-grid" id="skills-grid"></div>
-        </div>
-      </section>
-
       <section class="content-section portfolio-section" id="portfolio">
         <div class="container">
           <div class="section-heading reveal">
             <span class="section-label">Portfolio</span>
-            <h2>Selected work across interface design, web development, photography, and film.</h2>
+            <h2>Selected Work</h2>
           </div>
-
-          <div class="category-strip reveal">
-            <a class="category-pill interactive-hover" href="#portfolio-ux">
-              <strong>UX/UI Design</strong>
-              <span>Case studies with process, systems, and user thinking</span>
-            </a>
-            <a class="category-pill interactive-hover" href="#portfolio-web">
-              <strong>Web Development</strong>
-              <span>Responsive front-end builds from structured mockups</span>
-            </a>
-            <a class="category-pill interactive-hover" href="#portfolio-video">
-              <strong>Videography</strong>
-              <span>Story-driven short-form and sound-supported projects</span>
-            </a>
-            <a class="category-pill interactive-hover" href="#portfolio-photography">
-              <strong>Photography</strong>
-              <span>Editorial image curation and a lightbox viewing experience</span>
-            </a>
+          <div class="stacked-work-list" id="stacked-work-list"></div>
+          <div class="stacked-work-all">
+            <button class="button button-secondary interactive-hover" id="view-all-case-studies" type="button" aria-controls="case-study-library" aria-expanded="false">
+              <span>View All Case Studies</span>
+              <i data-lucide="arrow-down"></i>
+            </button>
           </div>
-
-          <div class="portfolio-category-block" id="portfolio-ux">
-            <div class="category-heading reveal">
-              <span class="section-label">UX/UI Design</span>
-              <h3>Case studies with deeper context</h3>
+          <div class="case-study-library" id="case-study-library" hidden>
+            <div class="selected-work-filters" role="group" aria-label="Filter All Work">
+              <button class="selected-work-filter is-active" type="button" data-selected-filter="All" aria-pressed="true">All</button>
+              <button class="selected-work-filter" type="button" data-selected-filter="UX/UI Design" aria-pressed="false">UX/UI Design</button>
+              <button class="selected-work-filter" type="button" data-selected-filter="Web Development" aria-pressed="false">Web Development</button>
+              <button class="selected-work-filter" type="button" data-selected-filter="Multimedia" aria-pressed="false">Multimedia</button>
             </div>
-            <div class="portfolio-grid" id="ux-grid"></div>
-            <div class="portfolio-category-actions reveal" id="ux-actions"></div>
-          </div>
-
-          <div class="portfolio-category-block" id="portfolio-web">
-            <div class="category-heading reveal">
-              <span class="section-label">Web Development</span>
-              <h3>Responsive static sites built from design direction</h3>
-            </div>
-            <div class="portfolio-grid" id="web-grid"></div>
-            <div class="portfolio-category-actions reveal" id="web-actions"></div>
-          </div>
-
-          <div class="portfolio-category-block" id="portfolio-video">
-            <div class="category-heading reveal">
-              <span class="section-label">Videography</span>
-              <h3>Short-form work shaped through editing, pacing, and sound</h3>
-            </div>
-            <div class="portfolio-grid" id="video-grid"></div>
-            <div class="portfolio-category-actions reveal" id="video-actions"></div>
-          </div>
-
-          <div class="portfolio-category-block photography-preview-block" id="portfolio-photography">
-            <div class="category-heading reveal">
-              <span class="section-label">Photography</span>
-              <h3>Curated frames with an editorial rhythm</h3>
-            </div>
-            <div class="photo-preview-grid" id="photo-preview-grid"></div>
-            <div class="portfolio-category-actions reveal" id="photo-actions"></div>
+            <div class="portfolio-grid selected-work-grid" id="selected-work-grid"></div>
+            <p class="visually-hidden" id="selected-work-count" role="status" aria-live="polite"></p>
           </div>
         </div>
       </section>
@@ -370,7 +272,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="js/data.js?v=20260915e"></script>
-    <script src="js/main.js?v=20260915e"></script>
+    <script src="js/data.js?v=20260920i"></script>
+    <script src="js/main.js?v=20260921a"></script>
   </body>
 </html>

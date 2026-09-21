@@ -1,10 +1,33 @@
 window.SITE_DATA = {
+  portfolioTaxonomy: [
+    { category: "UX/UI Design", subcategories: ["Mobile App Design", "Web Design"] },
+    { category: "Web Development", subcategories: [] },
+    { category: "Multimedia", subcategories: ["Photography", "Video & Film"] }
+  ],
+  selectedWorkIds: ["tallya", "remiya", "ai-business-idea-generator", "currency-collection", "ali-tazikeh-website", "stittsville", "my-coffee-house", "game-over", "short-horror-movie", "the-camper", "ten-toes-coffee", "farib-photography", "ig-photography"],
+  capabilities: [
+    {
+      name: "UX/UI Design",
+      description: "Shape clear experiences through research, prototyping, and testing.",
+      items: ["Figma", "Prototyping", "Maze", "Usability Testing", "Design Systems", "User Flows"]
+    },
+    {
+      name: "Web Development",
+      description: "Build responsive websites and interfaces from design through implementation.",
+      items: ["HTML", "CSS", "JavaScript", "Bootstrap", "WordPress", "Drupal", "Shopify", "Responsive Design"]
+    },
+    {
+      name: "Multimedia",
+      description: "Create visual stories across photography, video, and motion.",
+      items: ["Photoshop", "Illustrator", "InDesign", "Premiere Pro", "After Effects", "Adobe Audition", "Adobe Lightroom", "Photography", "Video Production"]
+    }
+  ],
   formspreeEndpoint: "https://formspree.io/f/xyeyqlrq",
   contactEmail: "ali.tazikeh@gmail.com",
   heroSocials: [
     {
       name: "GitHub",
-      href: "https://github.com/tazi0002",
+      href: "https://github.com/alitazikeh",
       iconUrl: "images/icons/github-icon.svg",
       accent: "#181717"
     },
@@ -43,33 +66,6 @@ window.SITE_DATA = {
       href: "https://www.youtube.com/@ali-tazikeh-yt",
       iconUrl: "images/icons/youtube-color-icon.svg",
       accent: "#ff0000"
-    }
-  ],
-  heroSkills: [
-    {
-      name: "Figma",
-      iconUrl: "images/icons/figma-icon.svg",
-      accent: "#f24e1e"
-    },
-    {
-      name: "JavaScript",
-      iconUrl: "images/icons/javascript-programming-language-icon.svg",
-      accent: "#f7df1e"
-    },
-    {
-      name: "WordPress",
-      iconUrl: "images/icons/wordpress-icon.svg",
-      accent: "#21759b"
-    },
-    {
-      name: "After Effects",
-      iconUrl: "images/icons/adobe-after-effects-icon.svg",
-      accent: "#9999ff"
-    },
-    {
-      name: "Premiere Pro",
-      iconUrl: "images/icons/adobe-premiere-pro-icon.svg",
-      accent: "#9999ff"
     }
   ],
   iconMarquee: [
@@ -266,6 +262,8 @@ window.SITE_DATA = {
     {
       id: "tallya",
       category: "UX/UI Design",
+      subcategory: "Mobile App Design",
+      featured: true,
       title: "TALLYA",
       summary: "A client-based safety mobile application designed to remain clear, understandable, and usable in higher-pressure situations.",
       coverImage: "images/portfolio/ux-ui-design/tallya/tallya-phone-mockup.png",
@@ -366,7 +364,9 @@ window.SITE_DATA = {
     },
     {
       id: "board-and-bun",
-      category: "UX/UI Design",
+      hidden: true,
+      category: "Multimedia",
+      subcategory: "Photography",
       title: "Board & Bun",
       summary:
         "A food photography and menu design project focused on giving a local pub a cleaner, more professional presentation.",
@@ -449,11 +449,12 @@ window.SITE_DATA = {
     {
       id: "remiya",
       category: "UX/UI Design",
+      subcategory: "Mobile App Design",
       title: "Remiya App",
       summary:
         "A premium memory-keeping product concept that turns a meaningful video moment into a physical wall tile with instant replay.",
-      coverImage: "images/portfolio/ux-ui-design/remiya/hi-fi/1-create-home.png",
-      coverAlt: "Remiya app home screen hi-fi design",
+      coverImage: "images/portfolio/ux-ui-design/remiya/thumbnail.png",
+      coverAlt: "Remiya app screen displayed in a phone mockup",
       tags: ["Product concept", "Personas", "Mobile UI"],
       type: "case-study",
       detailPage: "projects/remiya/",
@@ -654,11 +655,12 @@ window.SITE_DATA = {
     {
       id: "stittsville",
       category: "UX/UI Design",
+      subcategory: "Web Design",
       title: "Stittsville Shooting Range Website Redesign",
       summary:
         "A team-based redesign focused on improving clarity, professionalism, trust, and safety communication for a dated website.",
-      coverImage: "images/portfolio/ux-ui-design/stittsville/mood-2.jpg",
-      coverAlt: "Mood board for Stittsville Shooting Range redesign",
+      coverImage: "images/portfolio/ux-ui-design/stittsville/thumbnail-2.png",
+      coverAlt: "Stittsville Shooting Range website redesign shown in a laptop mockup",
       tags: ["Team project", "Brand refresh", "Responsive redesign"],
       type: "case-study",
       detailPage: "projects/stittsville/",
@@ -779,7 +781,7 @@ window.SITE_DATA = {
       coverAlt: "My Coffee House responsive landing page",
       tags: ["Responsive build", "Semantic HTML", "GitHub Pages"],
       type: "external",
-      externalUrl: "https://tazi0002.github.io/mtm6201-midterm/",
+      externalUrl: "https://alitazikeh.github.io/mtm6201-midterm/",
       ctaLabel: "View Live Site",
       meta: {
         role: "Front-end developer",
@@ -790,6 +792,7 @@ window.SITE_DATA = {
     },
     {
       id: "three-star",
+      hidden: true,
       category: "Web Development",
       title: "Three Star",
       summary:
@@ -797,9 +800,8 @@ window.SITE_DATA = {
       coverImage: "images/portfolio/web-development/three-star/web-1-final.jpg",
       coverAlt: "Three Star website mockup",
       tags: ["Mobile-first", "Grid and Flexbox", "Static site"],
-      type: "external",
-      externalUrl: "https://tazi0002.github.io/final-project/",
-      ctaLabel: "View Live Site",
+      type: "preview",
+      ctaLabel: "Updated live link pending",
       meta: {
         role: "Front-end developer",
         tools: ["HTML", "CSS"],
@@ -818,7 +820,7 @@ window.SITE_DATA = {
       tags: ["Vanilla JS", "AI workflow", "Responsive UI"],
       type: "case-study",
       detailPage: "projects/ai-business-idea-generator/",
-      liveUrl: "https://tazi0002.github.io/mtm6302-final/",
+      liveUrl: "https://alitazikeh.github.io/Business-Idea-Generator/",
       liveLabel: "Visit Live Site",
       ctaLabel: "View Live Site",
       meta: {
@@ -897,13 +899,94 @@ window.SITE_DATA = {
       ]
     },
     {
+      id: "currency-collection",
+      category: "Web Development",
+      title: "Currency Collection",
+      summary: "An evolving web app that helps a collector browse, search, and filter a personal collection of coins and banknotes. Developed with ongoing client feedback; work in progress.",
+      coverImage: "images/portfolio/web-development/currency-collection/homepage-preview.jpg",
+      coverAlt: "Currency Collection live website showing the collection inventory and search filters",
+      tags: ["Web App", "Search & Filtering", "Product Design", "Work in Progress"],
+      type: "external",
+      externalUrl: "https://alitazikeh.github.io/currency-collection/",
+      ctaLabel: "View Live Website",
+      meta: {
+        role: "Designer and Developer",
+        tools: []
+      }
+    },
+    {
+      id: "ali-tazikeh-website",
+      category: "Web Development",
+      categories: ["UX/UI Design", "Web Development"],
+      title: "AliTazikeh.com",
+      summary: "A personal portfolio website bringing together my UX/UI, web development, and multimedia work in one place.",
+      coverImage: "images/portfolio/web-development/ali-tazikeh/homepage-preview.jpg",
+      coverAlt: "Homepage of the Ali Tazikeh portfolio website",
+      tags: ["UX/UI", "Portfolio website", "Responsive design", "Front-end development"],
+      type: "case-study",
+      detailPage: "projects/ali-tazikeh-website/",
+      ctaLabel: "View Case Study",
+      meta: {
+        role: "Designer and front-end developer",
+        tools: ["HTML", "CSS", "JavaScript"],
+        deliverables: "Responsive portfolio website and project pages",
+        outcome: "One place to explore selected work and get in touch"
+      },
+      storyBlocks: [
+        {
+          type: "text",
+          eyebrow: "Overview",
+          title: "A home for my work",
+          paragraphs: [
+            "I designed and built this website to present my UX/UI, web development, and multimedia projects in one cohesive place.",
+            "The homepage introduces featured and selected work, my capabilities, a short introduction, and a way to get in touch. I will add more about the design and development process to this case study later."
+          ]
+        }
+      ]
+    },
+    {
+      id: "ig-photography",
+      category: "Multimedia",
+      subcategory: "Photography",
+      title: "IG Photography",
+      summary: "Selected photographs from the IG collection.",
+      coverImage: "images/portfolio/photography/IG/thumbnail.jpg",
+      coverAlt: "IG Photography collection thumbnail by Ali Tazikeh",
+      tags: ["Photography", "IG collection"],
+      type: "internal",
+      detailPage: "photography/?collection=IG",
+      ctaLabel: "View Photo Collection",
+      meta: {
+        role: "Photographer",
+        tools: ["Photography"]
+      }
+    },
+    {
+      id: "farib-photography",
+      category: "Multimedia",
+      subcategory: "Photography",
+      title: "Farib Photography",
+      summary: "Selected photographs from the Farib collection.",
+      coverImage: "images/portfolio/photography/Farib/thumbnail.jpg",
+      coverAlt: "Farib Photography collection thumbnail by Ali Tazikeh",
+      tags: ["Photography", "Farib collection"],
+      type: "internal",
+      detailPage: "photography/?collection=Farib",
+      ctaLabel: "View Photo Collection",
+      meta: {
+        role: "Photographer",
+        tools: ["Photography"]
+      }
+    },
+    {
       id: "short-horror-movie",
-      category: "Videography",
+      category: "Multimedia",
+      subcategory: "Video & Film",
       title: "What After",
       summary:
         "A documentary about Ulochi Eze, who balances a full-time job with photography as a creative hobby after working hours.",
-      coverImage: "images/portfolio/videography/what-after/what-after.jpg",
-      coverAlt: "What After video cover image",
+      coverImage: "images/portfolio/videography/what-after/thumbnail.jpg",
+      coverAlt: "What After project thumbnail",
       tags: ["Story editing", "Narrative structure", "Video foundations"],
       type: "external",
       externalUrl: "https://youtu.be/xR6u-_PsnbA",
@@ -917,12 +1000,13 @@ window.SITE_DATA = {
     },
     {
       id: "the-camper",
-      category: "Videography",
+      category: "Multimedia",
+      subcategory: "Video & Film",
       title: "The Camper",
       summary:
         "A Foley sound project where every key environmental sound was crafted to support tension, atmosphere, and immersion.",
-      coverImage: "images/portfolio/videography/the-camper/the-camper-image.jpg",
-      coverAlt: "The Camper project cover image",
+      coverImage: "images/portfolio/videography/the-camper/thumbnail.png",
+      coverAlt: "The Camper project thumbnail",
       tags: ["Foley", "Atmosphere", "Audio storytelling"],
       type: "external",
       externalUrl: "https://www.youtube.com/watch?v=DaUhtr5fygA",
@@ -936,7 +1020,8 @@ window.SITE_DATA = {
     },
     {
       id: "ten-toes-coffee",
-      category: "Videography",
+      category: "Multimedia",
+      subcategory: "Video & Film",
       title: "Ten Toes Coffee",
       summary:
         "A location tour exercise focused on composition, tripod framing, short-form editing, and a balanced mix of visuals, voiceover, and music.",
@@ -951,6 +1036,23 @@ window.SITE_DATA = {
         tools: ["Tripod shooting", "Audio balancing", "Editing"],
         deliverables: "One-minute location-based video",
         outcome: "A visually consistent location piece with controlled pacing"
+      }
+    },
+    {
+      id: "game-over",
+      category: "Multimedia",
+      subcategory: "Video & Film",
+      title: "Game Over",
+      summary: "An academic indie-film development project that turned a creative concept into a structured production proposal, balancing ambition with feasibility and a clear pitch.",
+      coverImage: "images/portfolio/videography/game-over/thumbnail-2.png",
+      coverAlt: "Game Over film artwork shown in a television mockup",
+      tags: ["Indie Film", "Film Concept", "Production Planning"],
+      type: "external",
+      externalUrl: "https://www.figma.com/deck/7p1jdR5LhwJ4Yzyk1eZA4S/Game-over-P?node-id=7-210&viewport=-159%2C-105%2C0.73&t=rJ5NEjEuamZZ8nNx-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1",
+      ctaLabel: "View Project Presentation",
+      meta: {
+        role: "Producer and Production Planner",
+        tools: []
       }
     }
   ],
@@ -1011,14 +1113,5 @@ window.SITE_DATA = {
     { src: "images/portfolio/photography/IG/38.jpg", alt: "IG photography by Ali Tazikeh", collection: "IG", order: 38 },
     { src: "images/portfolio/photography/IG/39.jpg", alt: "IG photography by Ali Tazikeh", collection: "IG", order: 39 },
     { src: "images/portfolio/photography/IG/40.jpg", alt: "IG photography by Ali Tazikeh", collection: "IG", order: 40 },
-    { src: "images/portfolio/photography/Jaffle/(1).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 1 },
-    { src: "images/portfolio/photography/Jaffle/(2).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 2 },
-    { src: "images/portfolio/photography/Jaffle/(3).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 3 },
-    { src: "images/portfolio/photography/Jaffle/(4).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 4 },
-    { src: "images/portfolio/photography/Jaffle/(5).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 5 },
-    { src: "images/portfolio/photography/Jaffle/(6).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 6 },
-    { src: "images/portfolio/photography/Jaffle/(7).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 7 },
-    { src: "images/portfolio/photography/Jaffle/(8).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 8 },
-    { src: "images/portfolio/photography/Jaffle/(9).png", alt: "Jaffle photography by Ali Tazikeh", collection: "Jaffle", order: 9 }
   ]
 };
