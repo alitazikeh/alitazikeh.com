@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         '<p class="portfolio-card-copy">' + escapeHtml(project.summary) + "</p>" +
         '<div class="portfolio-meta">' +
         '<span><i data-lucide="briefcase"></i>' + escapeHtml(project.meta.role) + "</span>" +
-        (tools ? '<span><i data-lucide="sparkles"></i>' + escapeHtml(tools) + "</span>" : "") +
+        (tools ? '<span>' + escapeHtml(tools) + "</span>" : "") +
         "</div>" +
         '<div class="portfolio-card-footer">' +
         footerAction +
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
       '<p class="portfolio-card-copy">' + escapeHtml(project.summary) + "</p>" +
       '<div class="portfolio-meta">' +
       '<span><i data-lucide="briefcase"></i>' + escapeHtml(project.meta.role) + "</span>" +
-      (tools ? '<span><i data-lucide="sparkles"></i>' + escapeHtml(tools) + "</span>" : "") +
+      (tools ? '<span>' + escapeHtml(tools) + "</span>" : "") +
       "</div>" +
       '<div class="portfolio-card-footer">' +
       footerAction +
@@ -622,7 +622,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ? '<section class="project-highlight-band reveal">' +
           project.highlights
             .map(function (highlight) {
-              return '<article class="highlight-card"><i data-lucide="sparkles"></i><p>' + escapeHtml(highlight) + "</p></article>";
+              return '<article class="highlight-card"><p>' + escapeHtml(highlight) + "</p></article>";
             })
             .join("") +
           "</section>"
@@ -1172,12 +1172,6 @@ document.addEventListener("DOMContentLoaded", function () {
     toggle.className = "theme-toggle interactive-hover";
 
     var systemPreference = window.matchMedia("(prefers-color-scheme: dark)");
-    var hasManualPreference = false;
-    try {
-      hasManualPreference = ["dark", "light"].includes(window.localStorage.getItem("portfolio-theme"));
-    } catch (error) {
-      // Follow the system preference when storage is unavailable.
-    }
 
     function applyTheme(theme) {
       var isDark = theme === "dark";
@@ -1202,17 +1196,22 @@ document.addEventListener("DOMContentLoaded", function () {
       (systemPreference.matches ? "dark" : "light"));
 
     systemPreference.addEventListener("change", function (event) {
-      if (!hasManualPreference) {
-        applyTheme(event.matches ? "dark" : "light");
+      try {
+        window.localStorage.removeItem("portfolio-theme-choice");
+      } catch (error) {
+        // Continue following the new system theme without storage.
       }
+      applyTheme(event.matches ? "dark" : "light");
     });
 
     toggle.addEventListener("click", function () {
       var nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
       applyTheme(nextTheme);
-      hasManualPreference = true;
       try {
-        window.localStorage.setItem("portfolio-theme", nextTheme);
+        window.localStorage.setItem("portfolio-theme-choice", JSON.stringify({
+          theme: nextTheme,
+          system: systemPreference.matches ? "dark" : "light"
+        }));
       } catch (error) {
         // Keep the active page theme even when persistence is unavailable.
       }

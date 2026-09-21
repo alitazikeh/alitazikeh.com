@@ -649,7 +649,6 @@ body.cursor-visible .cursor-core {
 .about-points svg,
 .contact-line i,
 .portfolio-meta i,
-.highlight-card i,
 .story-list-items i {
   width: 1rem;
   height: 1rem;
@@ -1540,6 +1539,20 @@ textarea.form-control {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.project-shell > *,
+.project-hero-copy,
+.project-hero-media,
+.project-meta-card {
+  min-width: 0;
+}
+
+.project-title,
+.project-summary,
+.project-meta-card strong,
+.story-copy {
+  overflow-wrap: anywhere;
+}
+
 .project-meta-card {
   padding: 1.15rem;
 }
@@ -1579,7 +1592,7 @@ textarea.form-control {
 }
 
 .highlight-card p {
-  margin: 0.7rem 0 0;
+  margin: 0;
   color: var(--text-soft);
   line-height: 1.75;
 }
@@ -2727,7 +2740,9 @@ body[data-page="home"] .hero-section {
   .stacked-work-card {
     position: relative;
     top: auto;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 0;
     gap: 1.5rem;
     margin-bottom: 1.25rem;
@@ -2736,7 +2751,30 @@ body[data-page="home"] .hero-section {
   }
 
   .stacked-work-copy .button {
+    order: 2;
+    align-self: center;
     margin-top: 1.5rem;
+  }
+
+  .stacked-work-copy {
+    display: contents;
+  }
+
+  .stacked-work-visual {
+    order: 1;
+  }
+
+  .stacked-work-kicker,
+  .stacked-work-copy h3,
+  .stacked-work-role,
+  .stacked-work-summary,
+  .stacked-work-award {
+    width: 100%;
+    text-align: center;
+  }
+
+  body[data-project-id="ali-tazikeh-website"] .project-title {
+    font-size: clamp(2.45rem, 12vw, 3.35rem);
   }
 
   .stacked-work-image {

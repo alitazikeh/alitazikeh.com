@@ -920,7 +920,7 @@ window.SITE_DATA = {
       categories: ["UX/UI Design", "Web Development"],
       title: "AliTazikeh.com",
       summary: "A personal portfolio website bringing together my UX/UI, web development, and multimedia work in one place.",
-      coverImage: "images/portfolio/web-development/ali-tazikeh/homepage-preview.jpg",
+      coverImage: "images/portfolio/web-development/ali-tazikeh/thumbnail.png",
       coverAlt: "Homepage of the Ali Tazikeh portfolio website",
       tags: ["UX/UI", "Portfolio website", "Responsive design", "Front-end development"],
       type: "case-study",
