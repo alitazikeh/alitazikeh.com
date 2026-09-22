@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var cardClickable = settings.cardClickable !== false && project.type !== "preview";
     var selected = settings.selected === true;
     var gameOverClass = project.id === "game-over" ? " portfolio-card-game-over" : "";
+    var photographyClass = project.subcategory === "Photography" ? " portfolio-card-photography" : "";
     var cardTags = settings.tags || project.tags;
     var tagMarkup = selected ? "" : '<div class="portfolio-chip-row">' + createTagMarkup(cardTags) + "</div>";
     var isInternal = project.type === "case-study" || project.type === "internal";
@@ -125,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (cardClickable) {
       return (
-        '<a class="portfolio-card' + (selected ? ' selected-work-card' : '') + gameOverClass + ' reveal interactive-hover" href="' + escapeHtml(resolvePath(destination)) + '"' + target + ">" +
+        '<a class="portfolio-card' + (selected ? ' selected-work-card' : '') + gameOverClass + photographyClass + ' reveal interactive-hover" data-project-id="' + escapeHtml(project.id) + '" href="' + escapeHtml(resolvePath(destination)) + '"' + target + ">" +
         '<div class="portfolio-media">' +
         mediaMarkup +
         playOverlay +
@@ -147,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     return (
-      '<article class="portfolio-card portfolio-card-static' + (selected ? ' selected-work-card' : '') + (project.type === "preview" ? ' portfolio-card-preview' : '') + gameOverClass + ' reveal">' +
+      '<article class="portfolio-card portfolio-card-static' + (selected ? ' selected-work-card' : '') + (project.type === "preview" ? ' portfolio-card-preview' : '') + gameOverClass + photographyClass + ' reveal" data-project-id="' + escapeHtml(project.id) + '">' +
       '<div class="portfolio-media">' +
       mediaMarkup +
       playOverlay +
@@ -399,7 +400,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     var filters = document.querySelectorAll(".selected-work-filter");
+    var pendingRestoreState = null;
+    try {
+      pendingRestoreState = JSON.parse(window.sessionStorage.getItem("portfolioRestoreState") || "null");
+    } catch (error) {
+      window.sessionStorage.removeItem("portfolioRestoreState");
+    }
+
+    if (pendingRestoreState && pendingRestoreState.libraryOpen && viewAllButton && library) {
+      library.hidden = false;
+      viewAllButton.setAttribute("aria-expanded", "true");
+      viewAllButton.querySelector("span").textContent = "Hide All Case Studies";
+    }
+
+    if (pendingRestoreState && pendingRestoreState.filter) {
+      var matchingFilter = Array.prototype.find.call(filters, function (button) {
+        return button.dataset.selectedFilter === pendingRestoreState.filter;
+      });
+      if (matchingFilter) {
+        activeCategory = pendingRestoreState.filter;
+      }
+    }
+
     filters.forEach(function (button) {
+      var initiallyActive = button.dataset.selectedFilter === activeCategory;
+      button.classList.toggle("is-active", initiallyActive);
+      button.setAttribute("aria-pressed", String(initiallyActive));
       button.addEventListener("click", function () {
         var category = button.dataset.selectedFilter;
         activeCategory = category;
@@ -591,10 +617,12 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    var heroImage = '<img src="' + escapeHtml(resolvePath(project.coverImage)) + '" alt="' + escapeHtml(project.coverAlt) + '">';
-    var heroMedia = ["tallya", "remiya", "stittsville"].indexOf(project.id) !== -1
+    var heroImageSource = project.heroImage || project.coverImage;
+    var heroImageAlt = project.heroImageAlt || project.coverAlt;
+    var heroImage = '<img src="' + escapeHtml(resolvePath(heroImageSource)) + '" alt="' + escapeHtml(heroImageAlt) + '">';
+    var heroMedia = project.heroImageClickable === false || ["tallya", "remiya", "stittsville"].indexOf(project.id) !== -1
       ? heroImage
-      : '<button class="project-image-button interactive-hover" type="button" data-lightbox-src="' + escapeHtml(project.coverImage) + '" data-lightbox-alt="' + escapeHtml(project.coverAlt) + '" data-lightbox-caption="' + escapeHtml(project.title) + '">' + heroImage + "</button>";
+      : '<button class="project-image-button interactive-hover" type="button" data-lightbox-src="' + escapeHtml(heroImageSource) + '" data-lightbox-alt="' + escapeHtml(heroImageAlt) + '" data-lightbox-caption="' + escapeHtml(project.title) + '">' + heroImage + "</button>";
     heroShell.innerHTML =
       '<div class="project-hero-copy reveal">' +
       '<span class="section-label">Case Study</span>' +
@@ -605,7 +633,9 @@ document.addEventListener("DOMContentLoaded", function () {
           escapeHtml(project.liveLabel || "Visit Live Site") +
           '<i data-lucide="arrow-up-right"></i></a></div>'
         : "") +
-      '<div class="project-tag-row">' + createTagMarkup(project.tags) + "</div>" +
+      ((project.tags || []).length
+        ? '<div class="project-tag-row">' + createTagMarkup(project.tags) + "</div>"
+        : "") +
       '<div class="project-meta-grid">' +
       '<div class="project-meta-card"><span>Role</span><strong>' + escapeHtml(project.meta.role) + "</strong></div>" +
       '<div class="project-meta-card"><span>Tools</span><strong>' + escapeHtml(project.meta.tools.join(", ")) + "</strong></div>" +
@@ -664,11 +694,59 @@ document.addEventListener("DOMContentLoaded", function () {
             );
           }
 
+          if (block.type === "document") {
+            return (
+              '<section class="story-block story-document reveal">' +
+              '<span class="section-label">' + escapeHtml(block.eyebrow) + "</span>" +
+              '<div class="story-copy">' +
+              '<h2>' + escapeHtml(block.title) + "</h2>" +
+              (block.paragraphs || [])
+                .map(function (paragraph) {
+                  return "<p>" + escapeHtml(paragraph) + "</p>";
+                })
+                .join("") +
+              '<a class="story-document-preview interactive-hover" href="' + escapeHtml(resolvePath(block.documentUrl)) + '" target="_blank" rel="noreferrer" aria-label="' + escapeHtml(block.actionLabel || "View document") + '">' +
+              '<img src="' + escapeHtml(resolvePath(block.previewImage)) + '" alt="' + escapeHtml(block.previewAlt || block.title) + '">' +
+              "</a>" +
+              '<a class="button button-secondary story-document-action interactive-hover" href="' + escapeHtml(resolvePath(block.documentUrl)) + '" target="_blank" rel="noreferrer">' +
+              escapeHtml(block.actionLabel || "View Document") + '<i data-lucide="arrow-up-right"></i></a>' +
+              "</div>" +
+              "</section>"
+            );
+          }
+
+          if (block.type === "document") {
+            return (
+              '<section class="story-block story-document reveal">' +
+              '<span class="section-label">' + escapeHtml(block.eyebrow) + "</span>" +
+              '<div class="story-copy">' +
+              '<h2>' + escapeHtml(block.title) + "</h2>" +
+              (block.paragraphs || [])
+                .map(function (paragraph) {
+                  return "<p>" + escapeHtml(paragraph) + "</p>";
+                })
+                .join("") +
+              '<a class="story-document-preview interactive-hover" href="' + escapeHtml(resolvePath(block.documentUrl)) + '" target="_blank" rel="noreferrer" aria-label="' + escapeHtml(block.actionLabel || "View document") + '">' +
+              '<img src="' + escapeHtml(resolvePath(block.previewImage)) + '" alt="' + escapeHtml(block.previewAlt || block.title) + '">' +
+              "</a>" +
+              '<a class="button button-secondary story-document-action interactive-hover" href="' + escapeHtml(resolvePath(block.documentUrl)) + '" target="_blank" rel="noreferrer">' +
+              escapeHtml(block.actionLabel || "View Document") + '<i data-lucide="arrow-up-right"></i></a>' +
+              "</div>" +
+              "</section>"
+            );
+          }
+
           if (block.type === "gallery") {
             return (
-              '<section class="story-block story-gallery reveal">' +
+              '<section class="story-block story-gallery' + (block.compact ? " story-gallery-compact" : "") + ' reveal">' +
               '<span class="section-label">' + escapeHtml(block.eyebrow) + "</span>" +
-              '<div class="story-copy"><h2>' + escapeHtml(block.title) + "</h2></div>" +
+              '<div class="story-copy"><h2>' + escapeHtml(block.title) + "</h2>" +
+              (block.paragraphs || [])
+                .map(function (paragraph) {
+                  return "<p>" + escapeHtml(paragraph) + "</p>";
+                })
+                .join("") +
+              "</div>" +
               '<div class="gallery-layout gallery-' + escapeHtml(block.layout || "grid") + '">' +
               (block.images || [])
                 .map(function (image) {
@@ -705,10 +783,17 @@ document.addEventListener("DOMContentLoaded", function () {
       if (projectLink) {
         try {
           var projectUrl = new URL(projectLink.href, window.location.href);
-          if (projectUrl.origin === window.location.origin && /\/projects\//.test(projectUrl.pathname) && body.dataset.page !== "project") {
+          var sourceCard = projectLink.closest("[data-project-id]");
+          if (projectUrl.origin === window.location.origin && sourceCard && body.dataset.page === "home") {
+            var caseStudyLibrary = document.getElementById("case-study-library");
+            var activeFilterButton = document.querySelector(".selected-work-filter.is-active");
             window.sessionStorage.setItem("portfolioReturnState", JSON.stringify({
               href: window.location.href,
-              scrollY: window.scrollY
+              scrollY: window.scrollY,
+              projectId: sourceCard.dataset.projectId || "",
+              cardViewportTop: sourceCard.getBoundingClientRect().top,
+              libraryOpen: !!caseStudyLibrary && !caseStudyLibrary.hidden,
+              filter: activeFilterButton ? activeFilterButton.dataset.selectedFilter : "All"
             }));
           }
         } catch (error) {
@@ -884,7 +969,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.sessionStorage.removeItem("portfolioRestoreState");
     }
 
-    if (body.dataset.page !== "project") {
+    if (body.dataset.page === "home") {
       if (restoreState && restoreState.href) {
         try {
           var restoreUrl = new URL(restoreState.href, window.location.href);
@@ -892,7 +977,15 @@ document.addEventListener("DOMContentLoaded", function () {
             window.sessionStorage.removeItem("portfolioRestoreState");
             window.requestAnimationFrame(function () {
               window.requestAnimationFrame(function () {
-                window.scrollTo({ top: Number(restoreState.scrollY) || 0, behavior: "auto" });
+                var restoreCard = Array.prototype.find.call(document.querySelectorAll("[data-project-id]"), function (card) {
+                  return card.dataset.projectId === restoreState.projectId;
+                });
+                var fallbackTop = Number(restoreState.scrollY) || 0;
+                var targetTop = restoreCard
+                  ? window.scrollY + restoreCard.getBoundingClientRect().top - (Number(restoreState.cardViewportTop) || 0)
+                  : fallbackTop;
+                window.scrollTo({ top: Math.max(0, targetTop), behavior: "auto" });
+                window.sessionStorage.removeItem("portfolioReturnState");
               });
             });
           }
@@ -903,8 +996,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    if (body.dataset.page !== "project" && body.dataset.sectionKey !== "photography") {
+      return;
+    }
+
     var topBackLink = document.querySelector(".project-breadcrumb");
     var backCard = document.querySelector(".project-cta-card");
+    var categoryBackLink = body.dataset.sectionKey === "photography"
+      ? document.querySelector(".page-back-section a[href]")
+      : null;
 
     if (topBackLink) {
       topBackLink.classList.add("project-back-link");
@@ -914,6 +1014,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (backCard) {
       backCard.classList.add("is-back-only");
       backCard.innerHTML = '<a class="button button-primary interactive-hover project-back-link" href="../../#portfolio"><i data-lucide="arrow-left"></i><span>Back</span></a>';
+    }
+
+
+    if (categoryBackLink) {
+      categoryBackLink.classList.add("project-back-link");
     }
 
     var backLinks = Array.prototype.slice.call(document.querySelectorAll(".project-back-link"));
@@ -1167,9 +1272,25 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    var toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "theme-toggle interactive-hover";
+    var navContainer = nav.parentElement;
+    var toggler = navContainer.querySelector(".navbar-toggler");
+    var desktopToggle = document.createElement("button");
+    desktopToggle.type = "button";
+    desktopToggle.className = "theme-toggle theme-toggle-desktop interactive-hover";
+
+    var mobileToggle = document.createElement("button");
+    mobileToggle.type = "button";
+    mobileToggle.className = "theme-toggle theme-toggle-mobile interactive-hover";
+
+    var mobileCta = nav.querySelector(":scope > .button");
+    if (mobileCta && toggler) {
+      var mobileCtaClone = mobileCta.cloneNode(true);
+      mobileCtaClone.className = "mobile-nav-cta interactive-hover";
+      navContainer.insertBefore(mobileToggle, toggler);
+      navContainer.insertBefore(mobileCtaClone, toggler);
+    }
+
+    var toggles = [desktopToggle, mobileToggle];
 
     var systemPreference = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -1183,15 +1304,17 @@ document.addEventListener("DOMContentLoaded", function () {
           portrait.setAttribute("src", portraitSrc);
         }
       }
-      toggle.setAttribute("aria-pressed", String(isDark));
-      toggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-      toggle.innerHTML =
-        '<i data-lucide="' + (isDark ? "sun" : "moon") + '"></i>' +
-        '<span>' + (isDark ? "Light Mode" : "Dark Mode") + "</span>";
+      toggles.forEach(function (toggle) {
+        toggle.setAttribute("aria-pressed", String(isDark));
+        toggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+        toggle.innerHTML =
+          '<span class="theme-toggle-thumb"><i data-lucide="' + (isDark ? "moon" : "sun") + '"></i></span>' +
+          '<span class="visually-hidden">' + (isDark ? "Switch to light mode" : "Switch to dark mode") + "</span>";
+      });
       refreshIcons();
     }
 
-    nav.insertBefore(toggle, nav.firstChild);
+    nav.insertBefore(desktopToggle, nav.firstChild);
     applyTheme(document.documentElement.dataset.theme ||
       (systemPreference.matches ? "dark" : "light"));
 
@@ -1204,17 +1327,19 @@ document.addEventListener("DOMContentLoaded", function () {
       applyTheme(event.matches ? "dark" : "light");
     });
 
-    toggle.addEventListener("click", function () {
-      var nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-      applyTheme(nextTheme);
-      try {
-        window.localStorage.setItem("portfolio-theme-choice", JSON.stringify({
-          theme: nextTheme,
-          system: systemPreference.matches ? "dark" : "light"
-        }));
-      } catch (error) {
-        // Keep the active page theme even when persistence is unavailable.
-      }
+    toggles.forEach(function (toggle) {
+      toggle.addEventListener("click", function () {
+        var nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        try {
+          window.localStorage.setItem("portfolio-theme-choice", JSON.stringify({
+            theme: nextTheme,
+            system: systemPreference.matches ? "dark" : "light"
+          }));
+        } catch (error) {
+          // Keep the active page theme even when persistence is unavailable.
+        }
+      });
     });
   }
 

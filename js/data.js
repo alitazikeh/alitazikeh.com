@@ -268,7 +268,7 @@ window.SITE_DATA = {
       summary: "A client-based safety mobile application designed to remain clear, understandable, and usable in higher-pressure situations.",
       coverImage: "images/portfolio/ux-ui-design/tallya/tallya-phone-mockup.png",
       coverAlt: "TALLYA safety mobile application login screen in a phone mockup",
-      tags: ["Client project", "UX/UI design", "Team leadership"],
+      tags: [],
       type: "case-study",
       detailPage: "projects/tallya/",
       liveUrl: "https://www.algonquincollege.com/news/2026/08/06/algonquin-college-technology-project-showcase-highlights-creative-solutions-and-technical-problem-solving/#more-7050",
@@ -283,12 +283,19 @@ window.SITE_DATA = {
         deliverables: "UX planning, interface design, prototype testing, visual identity, and client presentations",
         outcome: "Participants' Choice Award at the 2026 Algonquin College Technology Project Showcase"
       },
-      highlights: [
-        "Tested clarity under simulated time pressure and distraction.",
-        "Balanced user needs, client expectations, and team priorities.",
-        "Only Interactive Media Design team participating in the showcase; winner of the Participants' Choice Award."
-      ],
+      highlights: [],
       storyBlocks: [
+        {
+          type: "gallery",
+          eyebrow: "Award and Recognition",
+          title: "Participants' Choice Award",
+          layout: "trio",
+          images: [
+            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-1.jpg", alt: "TALLYA team at the 2026 Algonquin College Technology Project Showcase", caption: "TALLYA at the Technology Project Showcase" },
+            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-2.jpg", alt: "Participants' Choice Award event photograph", caption: "Participants' Choice Award recognition" },
+            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-3.jpg", alt: "TALLYA project team at the award event", caption: "The TALLYA team at the showcase" }
+          ]
+        },
         {
           type: "text",
           eyebrow: "Overview",
@@ -339,17 +346,6 @@ window.SITE_DATA = {
           eyebrow: "Visual Identity",
           title: "Designing the selected TALLYA logo",
           paragraphs: ["I designed the final TALLYA logo selected by the client. Several concepts were explored before the chosen direction became the visual identity used for the project."]
-        },
-        {
-          type: "gallery",
-          eyebrow: "Award and Recognition",
-          title: "Participants' Choice Award",
-          layout: "trio",
-          images: [
-            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-1.jpg", alt: "TALLYA team at the 2026 Algonquin College Technology Project Showcase", caption: "TALLYA at the Technology Project Showcase" },
-            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-2.jpg", alt: "Participants' Choice Award event photograph", caption: "Participants' Choice Award recognition" },
-            { src: "images/portfolio/ux-ui-design/tallya/award/showcase-3.jpg", alt: "TALLYA project team at the award event", caption: "The TALLYA team at the showcase" }
-          ]
         },
         {
           type: "text",
@@ -450,12 +446,12 @@ window.SITE_DATA = {
       id: "remiya",
       category: "UX/UI Design",
       subcategory: "Mobile App Design",
-      title: "Remiya App",
+      title: "Remiya",
       summary:
         "A premium memory-keeping product concept that turns a meaningful video moment into a physical wall tile with instant replay.",
       coverImage: "images/portfolio/ux-ui-design/remiya/thumbnail.png",
       coverAlt: "Remiya app screen displayed in a phone mockup",
-      tags: ["Product concept", "Personas", "Mobile UI"],
+      tags: [],
       type: "case-study",
       detailPage: "projects/remiya/",
       gallery: [
@@ -478,11 +474,7 @@ window.SITE_DATA = {
         deliverables: "Personas, flows, wireframes, hi-fi UI, and component studies",
         outcome: "A premium digital product concept centered on emotional memory keeping"
       },
-      highlights: [
-        "Defined a niche product position around intention, permanence, and instant replay.",
-        "Moved from personas to low-fi flows and then into a refined visual system.",
-        "Focused the interface on reducing friction around meaningful memories."
-      ],
+      highlights: [],
       storyBlocks: [
         {
           type: "text",
@@ -491,6 +483,20 @@ window.SITE_DATA = {
           paragraphs: [
             "Remiya is a native app paired with web that helps users select, preserve, display, and instantly replay a single meaningful video moment through a premium physical wall tile.",
             "The concept stood out to me because it treats memories with intention. Instead of burying emotional moments in cloud storage, it turns one chosen video into something visible, personal, and easy to revisit."
+          ]
+        },
+        {
+          type: "list",
+          eyebrow: "How It Works",
+          title: "A simple step-by-step journey",
+          intro:
+            "The product flow is intentionally direct so the technology stays in the background.",
+          items: [
+            "The user selects a meaningful video.",
+            "They trim the exact moment that matters.",
+            "They create a premium physical wall tile.",
+            "They mount it like decor.",
+            "A scan instantly replays the chosen moment."
           ]
         },
         {
@@ -514,20 +520,6 @@ window.SITE_DATA = {
             "Digital forgetting",
             "Replay friction",
             "A lack of emotional presence in everyday life"
-          ]
-        },
-        {
-          type: "list",
-          eyebrow: "How It Works",
-          title: "A simple step-by-step journey",
-          intro:
-            "The product flow is intentionally direct so the technology stays in the background.",
-          items: [
-            "The user selects a meaningful video.",
-            "They trim the exact moment that matters.",
-            "They create a premium physical wall tile.",
-            "They mount it like decor.",
-            "A scan instantly replays the chosen moment."
           ]
         },
         {
@@ -655,118 +647,204 @@ window.SITE_DATA = {
     {
       id: "stittsville",
       category: "UX/UI Design",
-      subcategory: "Web Design",
-      title: "Stittsville Shooting Range Website Redesign",
+      subcategory: "Website Redesign",
+      title: "Stittsville Shooting Range",
       summary:
-        "A team-based redesign focused on improving clarity, professionalism, trust, and safety communication for a dated website.",
+        "An academic UX/UI, branding, and website redesign focused on improving clarity, trust, safety communication, and the responsive experience.",
       coverImage: "images/portfolio/ux-ui-design/stittsville/thumbnail-2.png",
       coverAlt: "Stittsville Shooting Range website redesign shown in a laptop mockup",
-      tags: ["Team project", "Brand refresh", "Responsive redesign"],
+      tags: [],
       type: "case-study",
       detailPage: "projects/stittsville/",
       gallery: [
-        {
-          src: "images/portfolio/ux-ui-design/stittsville/mood-2.jpg",
-          alt: "Mood board for Stittsville"
-        },
-        {
-          src: "images/portfolio/ux-ui-design/stittsville/creative brief.png",
-          alt: "Creative brief for Stittsville redesign"
-        }
+        { src: "images/portfolio/ux-ui-design/stittsville/process/before.png", alt: "Original Stittsville Shooting Range website before the academic redesign" },
+        { src: "images/portfolio/ux-ui-design/stittsville/process/moodboard-final.jpg", alt: "Final combined moodboard for the Stittsville Shooting Range redesign" },
+        { src: "images/portfolio/ux-ui-design/stittsville/process/hi-fi-home.jpg", alt: "High-fidelity homepage design for the Stittsville Shooting Range redesign" }
       ],
       meta: {
-        role: "Project administrator and design contributor",
+        role: "Team Lead and UX/UI Designer",
         tools: ["Figma", "Illustrator", "Basecamp"],
-        deliverables: "Creative brief, brand direction, UX structure, and responsive redesign planning",
-        outcome: "A clearer, more modern concept that emphasized services, safety, and easier navigation"
+        deliverables: "Creative brief, personas, moodboards, sitemap, wireframes, brand system, responsive interface, and presentation",
+        outcome: "An academic redesign concept balancing approachability, professionalism, safety, and clearer navigation"
       },
-      highlights: [
-        "Started with a full review of the original site to identify usability and structure issues.",
-        "Reframed the experience around clarity, professionalism, and trust.",
-        "Balanced design contributions with project coordination responsibilities."
-      ],
+      highlights: [],
       storyBlocks: [
         {
-          type: "text",
-          eyebrow: "Overview",
-          title: "Improving trust through structure and design",
-          paragraphs: [
-            "The Stittsville Shooting Range Website Redesign focused on improving the online experience by creating a clearer, more modern, and more user-friendly website.",
-            "The original site felt outdated and visually cluttered, which made it difficult for users to quickly find important information and weakened the sense of professionalism and safety."
-          ]
-        },
-        {
-          type: "text",
-          eyebrow: "Team Context",
-          title: "A group project with real coordination demands",
-          paragraphs: [
-            "This was a group project completed by a team of six students, with our instructor acting as the client. We began by analyzing the existing website to identify structural and usability issues before developing a new design direction.",
-            "The goal was to improve both UX and visual branding by building a mobile-responsive concept that highlighted services, emphasized safety, and made information easier to access."
-          ]
-        },
-        {
-          type: "list",
-          eyebrow: "My Role",
-          title: "Design support plus project administration",
-          intro:
-            "In addition to contributing to the design work, I also handled the project administrator role.",
-          items: [
-            "Organized tasks and assigned roles across the team.",
-            "Set deadlines and followed up to keep milestones on schedule.",
-            "Uploaded project documents, updated shared links, and maintained the working structure for the group."
-          ]
-        },
-        {
-          type: "text",
-          eyebrow: "Creative Brief",
-          title: "Defining the foundation",
-          paragraphs: [
-            "The creative brief established the main objectives, scope, and deliverables. It aligned the team on the need for a clearer, safer, and more user-friendly website while also strengthening the visual identity of the brand.",
-            "It also clarified the scope of redesigning the desktop and mobile experience, refreshing the logo and brand direction, and planning a more intentional information structure."
-          ]
-        },
-        {
-          type: "text",
-          eyebrow: "Sitemap",
-          title: "Reorganizing content for easier navigation",
-          paragraphs: [
-            "The sitemap stage helped us compare the original site structure with a cleaner redesigned version. That process made it easier to see where content could be grouped more logically and where navigation could become simpler.",
-            "The redesigned structure focused on helping visitors reach key sections such as services, safety information, and booking-related content faster."
-          ]
-        },
-        {
           type: "gallery",
-          eyebrow: "Available Visuals",
-          title: "Creative brief and visual direction",
-          layout: "split",
+          eyebrow: "Before the Redesign",
+          title: "The starting point",
+          layout: "single",
           images: [
             {
-              src: "images/portfolio/ux-ui-design/stittsville/creative brief.png",
-              alt: "Creative brief for Stittsville redesign",
-              caption: "The project brief set the tone, deliverables, and UX priorities."
-            },
-            {
-              src: "images/portfolio/ux-ui-design/stittsville/mood-2.jpg",
-              alt: "Mood board for the Stittsville redesign",
-              caption: "A visual direction exploring a more polished and modern brand presence."
+              src: "images/portfolio/ux-ui-design/stittsville/process/before.png",
+              alt: "Original Stittsville Shooting Range website before the redesign",
+              caption: "The existing website that the team reviewed before defining the redesign direction."
             }
           ]
         },
         {
           type: "text",
-          eyebrow: "Brand and UX Direction",
-          title: "Making the site feel more credible",
+          eyebrow: "Overview",
+          title: "Why the website needed a new direction",
           paragraphs: [
-            "The redesign direction aimed to communicate professionalism, safety, and clarity at every level. That meant stronger hierarchy, clearer calls to action, cleaner layouts, and a visual identity that felt more current and trustworthy.",
-            "This project taught me a lot about how structure, communication, and project management can directly influence the quality of a design outcome."
+            "This was an academic redesign completed in Algonquin College's Interactive Media Design program. Stittsville Shooting Range did not commission or approve the concept; our course instructor acted as the stakeholder during project reviews.",
+            "The existing site felt visually dated and cluttered, with opportunities to improve hierarchy, navigation, responsive behavior, and the visibility of safety information. The Creative Brief set a clear objective: design a user-friendly, mobile-responsive website that highlights services, emphasizes safety, and improves customer engagement."
           ]
         },
         {
           type: "text",
-          eyebrow: "Outcome",
-          title: "A stronger digital first impression",
+          eyebrow: "Design Challenge",
+          title: "Balancing recreation with responsibility",
           paragraphs: [
-            "The final concept improved the overall experience by clarifying the content structure and reinforcing the brand with a more modern visual direction. It also gave me valuable experience balancing design execution with team organization."
+            "The central challenge was making the experience feel engaging and approachable without making firearms feel casual. The visual direction needed enough energy for recreational and first-time visitors while maintaining the seriousness, trust, and professionalism expected from a shooting range."
+          ]
+        },
+        {
+          type: "list",
+          eyebrow: "My Role",
+          title: "Team leadership, UX/UI design, and project organization",
+          intro: "I served as Team Lead and UX/UI Designer, combining hands-on design work with coordination across the six-person team.",
+          items: [
+            "Organized tasks, assigned responsibilities, and maintained the team's workflow in Basecamp.",
+            "Set deadlines, tracked milestones, followed up on progress, and kept project documents and shared links organized.",
+            "Helped define the visual direction, guided moodboard development, contributed to branding and interface decisions, and reviewed consistency throughout the project."
+          ]
+        },
+        {
+          type: "document",
+          eyebrow: "Creative Brief",
+          title: "Defining the objective, audience, and scope",
+          paragraphs: [
+            "The Creative Brief aligned the team around the redesign goals, audience needs, deliverables, safety considerations, and responsive requirements. It established the foundation for the work that followed."
+          ],
+          previewImage: "images/portfolio/ux-ui-design/stittsville/process/creative-brief-cover.jpg",
+          previewAlt: "Cover of the Stittsville Shooting Range redesign Creative Brief",
+          documentUrl: "images/portfolio/ux-ui-design/stittsville/process/creative-brief.pdf",
+          actionLabel: "View Creative Brief PDF"
+        },
+        {
+          type: "gallery",
+          eyebrow: "Personas",
+          title: "Three audience perspectives",
+          layout: "trio",
+          paragraphs: [
+            "We developed three primary personas with different motivations and comfort levels. Their needs shaped the three moodboard directions that followed."
+          ],
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/persona-1.jpg", alt: "Persona 1, David Miller", caption: "Persona 1 — David Miller values a serious environment, discipline, and prestige." },
+            { src: "images/portfolio/ux-ui-design/stittsville/process/persona-2.jpg", alt: "Persona 2, Alex Carter", caption: "Persona 2 — Alex Carter looks for fun, group challenges, and a memorable activity with friends." },
+            { src: "images/portfolio/ux-ui-design/stittsville/process/persona-3.jpg", alt: "Persona 3, Emily Swatt", caption: "Persona 3 — Emily Swatt is new to the activity and wants a safe environment with clear training and support." }
+          ]
+        },
+        {
+          type: "gallery",
+          eyebrow: "Moodboard Exploration",
+          title: "Three directions for three personas",
+          layout: "trio",
+          paragraphs: [
+            "Each moodboard translated one persona's expectations into a distinct visual language."
+          ],
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/moodboard-1.png", alt: "Moodboard 1 for David Miller", caption: "Moodboard 1 — David Miller: serious, disciplined, and credible." },
+            { src: "images/portfolio/ux-ui-design/stittsville/process/moodboard-2.png", alt: "Moodboard 2 for Alex Carter", caption: "Moodboard 2 — Alex Carter: energetic, social, and influenced by tactical and gaming culture." },
+            { src: "images/portfolio/ux-ui-design/stittsville/process/moodboard-3.png", alt: "Moodboard 3 for Emily Swatt", caption: "Moodboard 3 — Emily Swatt: safe, friendly, and welcoming for a newcomer." }
+          ]
+        },
+        {
+          type: "gallery",
+          eyebrow: "Final Moodboard",
+          title: "Combining the three directions",
+          layout: "single",
+          paragraphs: [
+            "After reviewing the three directions, our course instructor, acting as the academic stakeholder, asked us to combine them into one moodboard that could speak to all three audiences. The final direction brings together safety and responsibility, professional credibility, approachability, recreational energy, and a controlled tactical influence."
+          ],
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/moodboard-final.jpg", alt: "Final combined Stittsville Shooting Range moodboard", caption: "Moodboard Final — the combined direction approved by the academic stakeholder." }
+          ]
+        },
+        {
+          type: "gallery",
+          eyebrow: "Project Planning",
+          title: "Organizing the work across milestones",
+          layout: "single",
+          compact: true,
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/gantt-chart.jpg", alt: "Gantt chart for the Stittsville Shooting Range redesign", caption: "The Gantt chart organized discovery, visual direction, UX structure, interface design, brand-system work, and final documentation." }
+          ]
+        },
+        {
+          type: "gallery",
+          eyebrow: "Sitemap",
+          title: "Creating a clearer information structure",
+          layout: "single",
+          compact: true,
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/sitemap.jpg", alt: "Proposed sitemap for the Stittsville Shooting Range redesign", caption: "The proposed sitemap reorganized services, safety information, and booking pathways into a clearer navigation structure." }
+          ]
+        },
+        {
+          type: "gallery",
+          eyebrow: "Low-Fidelity",
+          title: "Planning hierarchy and key pathways",
+          layout: "tall",
+          compact: true,
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/low-fi-home.jpg", alt: "Low-fidelity homepage wireframe for the Stittsville Shooting Range redesign", caption: "Homepage wireframe focused on structure, hierarchy, and priority content." },
+            { src: "images/portfolio/ux-ui-design/stittsville/process/low-fi-plan.jpg", alt: "Low-fidelity Plan Your Visit wireframe for the Stittsville Shooting Range redesign", caption: "Plan Your Visit wireframe organized practical information into a more direct path." }
+          ]
+        },
+        {
+          type: "gallery",
+          eyebrow: "High-Fidelity",
+          title: "Translating the direction into a responsive interface",
+          layout: "tall",
+          compact: true,
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/hi-fi-home.jpg", alt: "High-fidelity homepage for the Stittsville Shooting Range redesign", caption: "The high-fidelity homepage applied the final visual direction to a clearer and more modern interface." },
+            { src: "images/portfolio/ux-ui-design/stittsville/process/hi-fi-plan.jpg", alt: "High-fidelity Plan Your Visit page for the Stittsville Shooting Range redesign", caption: "The Plan Your Visit page balanced welcoming content with clear safety and preparation information." }
+          ]
+        },
+        {
+          type: "gallery",
+          eyebrow: "Logo",
+          title: "A refreshed identity for the concept",
+          layout: "split",
+          compact: true,
+          images: [
+            { src: "images/portfolio/ux-ui-design/stittsville/process/logo-full-colour.png", alt: "Full-colour logo created for the Stittsville Shooting Range redesign", caption: "The selected full-colour logo direction used in the academic redesign." },
+            { src: "images/portfolio/ux-ui-design/stittsville/process/logo-grey-scale.png", alt: "Greyscale logo created for the Stittsville Shooting Range redesign", caption: "The greyscale variation tested the identity beyond its primary colour treatment." }
+          ]
+        },
+        {
+          type: "document",
+          eyebrow: "Branding Guide",
+          title: "Turning the direction into a consistent system",
+          paragraphs: [
+            "The Branding Guide brought the selected logo, colours, typography, imagery, and usage decisions into one reference so the website and supporting materials could remain visually consistent."
+          ],
+          previewImage: "images/portfolio/ux-ui-design/stittsville/process/branding-guide-cover.jpg",
+          previewAlt: "Cover of the Stittsville Shooting Range redesign Branding Guide",
+          documentUrl: "images/portfolio/ux-ui-design/stittsville/process/branding-guide.pdf",
+          actionLabel: "View Branding Guide PDF"
+        },
+        {
+          type: "document",
+          eyebrow: "Final Presentation",
+          title: "Presenting the complete academic redesign",
+          paragraphs: [
+            "The final presentation brought together the research, planning, visual exploration, interface work, and brand system for the academic project handoff."
+          ],
+          previewImage: "images/portfolio/ux-ui-design/stittsville/process/presentation-cover.jpg",
+          previewAlt: "Cover of the Stittsville Shooting Range redesign final presentation",
+          documentUrl: "images/portfolio/ux-ui-design/stittsville/process/presentation.pdf",
+          actionLabel: "View Final Presentation PDF"
+        },
+        {
+          type: "text",
+          eyebrow: "Outcome",
+          title: "A clearer and more intentional redesign concept",
+          paragraphs: [
+            "The final concept connected UX structure and visual identity into one direction that felt more modern, welcoming, and credible. The project also strengthened my experience leading a design team, organizing work in Basecamp, communicating design rationale, and maintaining consistency from exploration through final delivery."
           ]
         }
       ]
@@ -817,7 +895,10 @@ window.SITE_DATA = {
         "A class-project web app that turns a short user profile into three structured business ideas with a guided form, loading state, and polished result cards.",
       coverImage: "images/portfolio/web-development/ai-business-idea-generator/mtm6302-final.jpg",
       coverAlt: "AI Business Idea Generator final interface",
-      tags: ["Vanilla JS", "AI workflow", "Responsive UI"],
+      heroImage: "images/portfolio/web-development/ai-business-idea-generator/thumbnail-mockup.png",
+      heroImageAlt: "AI Business Idea Generator shown in a laptop mockup",
+      tags: [],
+      heroImageClickable: false,
       type: "case-study",
       detailPage: "projects/ai-business-idea-generator/",
       liveUrl: "https://alitazikeh.github.io/Business-Idea-Generator/",
@@ -829,11 +910,7 @@ window.SITE_DATA = {
         deliverables: "Single-page app, guided form flow, result cards, and responsive layout",
         outcome: "A small but polished AI-powered class project designed for clear demo use"
       },
-      highlights: [
-        "Kept the scope intentionally small so the app stayed easy to understand and easy to demo.",
-        "Structured the AI output into predictable cards instead of leaving the response visually messy.",
-        "Moved from low-fi planning to a clearer hi-fi layout before building the final front-end."
-      ],
+      highlights: [],
       storyBlocks: [
         {
           type: "text",
@@ -922,7 +999,10 @@ window.SITE_DATA = {
       summary: "A personal portfolio website bringing together my UX/UI, web development, and multimedia work in one place.",
       coverImage: "images/portfolio/web-development/ali-tazikeh/thumbnail.png",
       coverAlt: "Homepage of the Ali Tazikeh portfolio website",
-      tags: ["UX/UI", "Portfolio website", "Responsive design", "Front-end development"],
+      heroImage: "images/portfolio/web-development/ali-tazikeh/thumbnail-mockup.png?v=20260922i",
+      heroImageAlt: "AliTazikeh.com portfolio website shown in a laptop mockup",
+      tags: [],
+      heroImageClickable: false,
       type: "case-study",
       detailPage: "projects/ali-tazikeh-website/",
       ctaLabel: "View Case Study",
