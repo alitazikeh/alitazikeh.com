@@ -866,24 +866,20 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    var position = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    var target = { x: position.x, y: position.y };
-
-    function animateCursor() {
-      position.x += (target.x - position.x) * 0.32;
-      position.y += (target.y - position.y) * 0.32;
-      cursorGlow.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0)";
-      cursorCore.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0)";
-      window.requestAnimationFrame(animateCursor);
-    }
-
     document.addEventListener("mousemove", function (event) {
-      target.x = event.clientX;
-      target.y = event.clientY;
+      var transform = "translate3d(" + event.clientX + "px, " + event.clientY + "px, 0)";
+      cursorGlow.style.transform = transform;
+      cursorCore.style.transform = transform;
       body.classList.add("cursor-visible");
+    }, { passive: true });
+
+    document.addEventListener("mouseleave", function () {
+      body.classList.remove("cursor-visible");
     });
 
-    animateCursor();
+    window.addEventListener("blur", function () {
+      body.classList.remove("cursor-visible");
+    });
   }
 
   function initNavState() {

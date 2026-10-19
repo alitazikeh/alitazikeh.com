@@ -121,7 +121,8 @@ main {
   pointer-events: none;
   z-index: 2000;
   opacity: 0;
-  transition: opacity 0.16s ease, transform 0.1s ease;
+  transition: opacity 0.16s ease;
+  will-change: transform, opacity;
 }
 
 .cursor-glow {
@@ -1468,45 +1469,15 @@ textarea.form-control {
 .resume-preview {
   display: flex;
   justify-content: center;
-  padding: clamp(1.25rem, 4vw, 3rem);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  background: transparent;
 }
 
-.resume-preview-page {
-  display: flex;
-  width: min(100%, 720px);
-  min-height: clamp(540px, 70vw, 880px);
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 18px;
-  background:
-    linear-gradient(rgba(var(--brand-lavender-rgb), 0.07) 1px, transparent 1px) 0 0 / 100% 42px,
-    var(--surface-strong);
-  box-shadow: var(--shadow-soft);
-  text-align: center;
-}
-
-.resume-preview-page strong {
-  font-family: var(--font-heading);
-  font-size: clamp(3rem, 9vw, 7rem);
-  line-height: 1;
-  letter-spacing: -0.06em;
-}
-
-.resume-preview-page span {
-  color: var(--text-soft);
-}
-
-.resume-preview-kicker {
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.resume-preview-document {
+  display: block;
+  width: min(100%, 900px);
+  height: auto;
+  border: 0;
+  background: transparent;
 }
 
 .resume-download-actions {
@@ -1514,11 +1485,6 @@ textarea.form-control {
   justify-content: center;
   gap: 1rem;
   margin-top: 1.5rem;
-}
-
-.resume-download-placeholder:disabled {
-  cursor: not-allowed;
-  opacity: 0.68;
 }
 
 @media (max-width: 575px) {

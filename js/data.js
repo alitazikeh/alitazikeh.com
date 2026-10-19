@@ -23,7 +23,7 @@ window.SITE_DATA = {
     }
   ],
   formspreeEndpoint: "https://formspree.io/f/xyeyqlrq",
-  contactEmail: "ali.tazikeh@gmail.com",
+  contactEmail: "alitazikeh@gmail.com",
   heroSocials: [
     {
       name: "GitHub",
